@@ -49,7 +49,7 @@ public class ScreenGame implements Screen {
         vasyaRed = main.vasyaRed;
 
         imgJoystick = new Texture("joystick.png");
-        imgBackGround = new Texture("space0.png");
+        imgBackGround = new Texture("BackGroundPlay.png");
         imgShipsAtlas = new Texture("ships_atlas.png");
         imgShotsAtlas = new Texture("shots.png");
         for (int i = 0; i < imgShip.length; i++) {

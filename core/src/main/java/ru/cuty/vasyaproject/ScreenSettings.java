@@ -48,7 +48,7 @@ public class ScreenSettings implements Screen {
         btnScreen = new SunButton("Screen", vasyaFont, 200, 500);
         btnJoystick = new SunButton(main.joystick.getText(), vasyaWhite, 200, 400);
         btnAccelerometer = new SunButton("Accelerometer", vasyaWhite, 200, 300);
-        btnBack = new SunButton("X", vasyaRed, 1530, 870);
+        btnBack = new SunButton("X", vasyaRed, 1552, 898);
     }
 
     @Override

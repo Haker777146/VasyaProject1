@@ -64,7 +64,7 @@ public class ScreenGame implements Screen {
             imgShot[i] = new TextureRegion(imgShotsAtlas, i*100, 0, 100, 350);
         }
 
-        btnBack = new SunButton("X", vasyaRed, 1530, 870);
+        btnBack = new SunButton("X", vasyaRed, 1552, 898);
 
         space[0] = new Space(0, 0);
         space[1] = new Space(0, SCR_HEIGHT);

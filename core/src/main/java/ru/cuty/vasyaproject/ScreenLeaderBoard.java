@@ -33,7 +33,7 @@ public class ScreenLeaderBoard implements Screen {
 
         imgBackGround = new Texture("space2.png");
 
-        btnBack = new SunButton("X", vasyaRed, 1552, 898);
+        btnBack = new SunButton("X", vasyaRed, 1530, 870);
     }
 
     @Override

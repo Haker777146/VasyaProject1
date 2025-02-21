@@ -5,6 +5,7 @@ import static ru.cuty.vasyaproject.Main.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,6 +23,7 @@ public class ScreenGame implements Screen {
     private Vector3 touch;
     private BitmapFont vasyaRed;
     private Main main;
+    private Music sndMenuMusic;
 
     Texture imgJoystick;
     Texture imgBackGround;
@@ -47,6 +49,7 @@ public class ScreenGame implements Screen {
         camera = main.camera;
         touch = main.touch;
         vasyaRed = main.vasyaRed;
+        sndMenuMusic = main.sndMenuMusic;
 
         imgJoystick = new Texture("joystick.png");
         imgBackGround = new Texture("BackGroundPlay.png");
@@ -83,7 +86,9 @@ public class ScreenGame implements Screen {
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touch);
 
-            if(btnBack.hit(touch)){
+            if(btnBack.hit(touch))
+            {
+                sndMenuMusic.play();
                 main.setScreen(main.screenMenu);
             }
         }

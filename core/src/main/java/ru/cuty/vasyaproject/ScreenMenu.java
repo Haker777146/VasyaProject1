@@ -2,8 +2,10 @@ package ru.cuty.vasyaproject;
 
 import static ru.cuty.vasyaproject.Main.*;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,6 +18,7 @@ public class ScreenMenu implements Screen {
     private Vector3 touch;
     private BitmapFont font;
     private Main main;
+    private Music sndMenuMusic;
 
     Texture imgBackGround;
 
@@ -25,12 +28,16 @@ public class ScreenMenu implements Screen {
     SunButton btnAbout;
     SunButton btnExit;
 
-    public ScreenMenu(Main main) {
+    public ScreenMenu(Main main)
+    {
         this.main = main;
         batch = main.batch;
         camera = main.camera;
         touch = main.touch;
         font = main.vasyaFont;
+        sndMenuMusic = main.sndMenuMusic;
+
+        sndMenuMusic.play();
 
         imgBackGround = new Texture("space1.png");
 
@@ -42,7 +49,9 @@ public class ScreenMenu implements Screen {
     }
 
     @Override
-    public void show() {
+    public void show()
+    {
+
     }
 
     @Override
@@ -52,7 +61,9 @@ public class ScreenMenu implements Screen {
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touch);
 
-            if(btnPlay.hit(touch.x, touch.y)){
+            if(btnPlay.hit(touch.x, touch.y))
+            {
+                sndMenuMusic.pause();
                 main.setScreen(main.screenGame);
             }
             if(btnSettings.hit(touch.x, touch.y)){
@@ -101,7 +112,8 @@ public class ScreenMenu implements Screen {
     }
 
     @Override
-    public void dispose() {
+    public void dispose()
+    {
 
     }
 }

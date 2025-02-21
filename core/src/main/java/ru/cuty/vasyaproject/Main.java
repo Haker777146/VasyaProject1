@@ -2,6 +2,7 @@ package ru.cuty.vasyaproject;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,6 +21,7 @@ public class Main extends Game {
     public BitmapFont vasyaFont;
     public BitmapFont vasyaRed;
     public BitmapFont vasyaWhite;
+    public Music sndMenuMusic;
 
     Joystick joystick;
     ScreenMenu screenMenu;
@@ -38,6 +40,8 @@ public class Main extends Game {
         vasyaRed = new BitmapFont(Gdx.files.internal("vasyaRed.fnt"));
         vasyaWhite = new BitmapFont(Gdx.files.internal("vasyaWhite.fnt"));
 
+        sndMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("MenuMusic.mp3"));
+
         joystick = new Joystick(360, RIGHT);
         screenMenu = new ScreenMenu(this);
         screenGame = new ScreenGame(this);
@@ -53,5 +57,6 @@ public class Main extends Game {
         vasyaFont.dispose();
         vasyaWhite.dispose();
         vasyaRed.dispose();
+        sndMenuMusic.dispose();
     }
 }

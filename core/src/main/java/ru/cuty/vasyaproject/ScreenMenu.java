@@ -18,7 +18,7 @@ public class ScreenMenu implements Screen {
     private Vector3 touch;
     private BitmapFont font;
     private Main main;
-    private Music sndMenuMusic;
+    private Music sndMenuMusic, sndPlayScreenMusic;
 
     Texture imgBackGround;
 
@@ -36,6 +36,7 @@ public class ScreenMenu implements Screen {
         touch = main.touch;
         font = main.vasyaFont;
         sndMenuMusic = main.sndMenuMusic;
+        sndPlayScreenMusic = main.sndPlayScreenMusic;
 
         sndMenuMusic.play();
 
@@ -65,6 +66,7 @@ public class ScreenMenu implements Screen {
             {
                 sndMenuMusic.pause();
                 main.setScreen(main.screenGame);
+                sndPlayScreenMusic.play();
             }
             if(btnSettings.hit(touch.x, touch.y)){
                 main.setScreen(main.screenSettings);

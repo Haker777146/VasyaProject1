@@ -21,7 +21,7 @@ public class Main extends Game {
     public BitmapFont vasyaFont;
     public BitmapFont vasyaRed;
     public BitmapFont vasyaWhite;
-    public Music sndMenuMusic;
+    public Music sndMenuMusic, sndPlayScreenMusic;
 
     Joystick joystick;
     ScreenMenu screenMenu;
@@ -41,6 +41,7 @@ public class Main extends Game {
         vasyaWhite = new BitmapFont(Gdx.files.internal("vasyaWhite.fnt"));
 
         sndMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("MenuMusic.mp3"));
+        sndPlayScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("PlayScreenMusic.mp3"));
 
         joystick = new Joystick(360, RIGHT);
         screenMenu = new ScreenMenu(this);
@@ -58,5 +59,6 @@ public class Main extends Game {
         vasyaWhite.dispose();
         vasyaRed.dispose();
         sndMenuMusic.dispose();
+        sndPlayScreenMusic.dispose();
     }
 }

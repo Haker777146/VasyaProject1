@@ -23,7 +23,7 @@ public class ScreenGame implements Screen {
     private Vector3 touch;
     private BitmapFont vasyaRed;
     private Main main;
-    private Music sndMenuMusic;
+    private Music sndMenuMusic, sndPlayScreenMusic;
 
     Texture imgJoystick;
     Texture imgBackGround;
@@ -50,6 +50,7 @@ public class ScreenGame implements Screen {
         touch = main.touch;
         vasyaRed = main.vasyaRed;
         sndMenuMusic = main.sndMenuMusic;
+        sndPlayScreenMusic = main.sndPlayScreenMusic;
 
         imgJoystick = new Texture("joystick.png");
         imgBackGround = new Texture("BackGroundPlay.png");
@@ -75,7 +76,8 @@ public class ScreenGame implements Screen {
     }
 
     @Override
-    public void show() {
+    public void show()
+    {
         Gdx.input.setInputProcessor(new SunInputProcessor());
     }
 
@@ -89,6 +91,7 @@ public class ScreenGame implements Screen {
             if(btnBack.hit(touch))
             {
                 sndMenuMusic.play();
+                sndPlayScreenMusic.stop();
                 main.setScreen(main.screenMenu);
             }
         }

@@ -43,9 +43,9 @@ public class ScreenSettings implements Screen {
 
 
         imgBackGround = new Texture("MenuBackGround.png");
-        btnSettings = new SunButton("Settings", vasyaFont, 800);
+        btnSettings = new SunButton("Settings", vasyaFont, 600, 800);
         btnControl = new SunButton("Control", vasyaFont, 100, 620);
-        btnScreen = new SunButton("Screen", vasyaFont, 200, 500);
+        btnScreen = new SunButton("Touch Screen", vasyaRed, 200, 500);
         btnJoystick = new SunButton(main.joystick.getText(), vasyaWhite, 200, 400);
         btnAccelerometer = new SunButton("Accelerometer", vasyaWhite, 200, 300);
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
@@ -63,14 +63,14 @@ public class ScreenSettings implements Screen {
             camera.unproject(touch);
 
             if(btnScreen.hit(touch)){
-                btnScreen.setFont(vasyaFont);
+                btnScreen.setFont(vasyaRed);
                 btnJoystick.setFont(vasyaWhite);
                 btnAccelerometer.setFont(vasyaWhite);
                 controls = SCREEN;
             }
             if(btnJoystick.hit(touch)){
                 btnScreen.setFont(vasyaWhite);
-                btnJoystick.setFont(vasyaFont);
+                btnJoystick.setFont(vasyaRed);
                 btnAccelerometer.setFont(vasyaWhite);
                 if(controls == JOYSTICK){
                     main.joystick.setSide(!main.joystick.side);
@@ -84,7 +84,7 @@ public class ScreenSettings implements Screen {
                 if(Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)) {
                     btnScreen.setFont(vasyaWhite);
                     btnJoystick.setFont(vasyaWhite);
-                    btnAccelerometer.setFont(vasyaFont);
+                    btnAccelerometer.setFont(vasyaRed);
                     controls = ACCELEROMETER;
                 }
             }

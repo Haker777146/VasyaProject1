@@ -40,7 +40,7 @@ public class Main extends Game {
         vasyaRed = new BitmapFont(Gdx.files.internal("vasyaRed.fnt"));
         vasyaWhite = new BitmapFont(Gdx.files.internal("vasyaWhite.fnt"));
 
-        sndMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("MenuMusic.mp3"));
+        sndMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("MusicMenu.mp3"));
         sndPlayScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("PlayScreenMusic.mp3"));
 
         joystick = new Joystick(360, RIGHT);

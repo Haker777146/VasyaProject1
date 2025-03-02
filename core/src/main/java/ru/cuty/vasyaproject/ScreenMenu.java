@@ -42,11 +42,11 @@ public class ScreenMenu implements Screen {
 
         imgBackGround = new Texture("MenuBackGround.png");
 
-        btnPlay = new SunButton("Play", font, 200, 700);
-        btnSettings = new SunButton("Settings", font, 200, 600);
-        btnLeaderBoard = new SunButton("LeaderBoard", font, 200, 500);
-        btnAbout = new SunButton("About", font, 200, 400);
-        btnExit = new SunButton("Exit", font, 200, 300);
+        btnPlay = new SunButton("Play", font, 90, 740);
+        btnSettings = new SunButton("Settings", font, 90, 615);
+        btnLeaderBoard = new SunButton("Leaderboard", font, 90, 490);
+        btnAbout = new SunButton("About", font, 90, 365);
+        btnExit = new SunButton("Exit", font, 90, 240);
     }
 
     @Override

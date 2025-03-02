@@ -55,7 +55,7 @@ public class ScreenLeaderBoard implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(imgBackGround, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        vasyaFont.draw(batch, "Leaderboard", 600, 800);
+        vasyaFont.draw(batch, "Leaderboard", 550, 800);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
         batch.end();
     }

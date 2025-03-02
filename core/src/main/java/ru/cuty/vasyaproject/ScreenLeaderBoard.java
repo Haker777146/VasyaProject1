@@ -31,7 +31,7 @@ public class ScreenLeaderBoard implements Screen {
         vasyaFont = main.vasyaFont;
         vasyaRed = main.vasyaRed;
 
-        imgBackGround = new Texture("space2.png");
+        imgBackGround = new Texture("MenuBackGround.png");
 
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
     }

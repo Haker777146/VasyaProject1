@@ -42,7 +42,7 @@ public class ScreenSettings implements Screen {
         vasyaRed = main.vasyaRed;
 
 
-        imgBackGround = new Texture("space3.png");
+        imgBackGround = new Texture("MenuBackGround.png");
         btnSettings = new SunButton("Settings", vasyaFont, 800);
         btnControl = new SunButton("Control", vasyaFont, 100, 620);
         btnScreen = new SunButton("Screen", vasyaFont, 200, 500);

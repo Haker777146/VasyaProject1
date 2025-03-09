@@ -11,11 +11,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.crypto.dsig.Transform;
 
 public class ScreenGame implements Screen {
     private SpriteBatch batch;
@@ -101,7 +104,7 @@ public class ScreenGame implements Screen {
         }
 
         // события
-        for(Space s: space) s.move();
+        for (Space s: space) s.move();
         ship.move();
         spawnEnemy();
         for(Enemy e: enemies) e.move();

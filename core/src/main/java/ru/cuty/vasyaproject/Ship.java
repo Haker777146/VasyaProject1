@@ -2,19 +2,26 @@ package ru.cuty.vasyaproject;
 
 import static ru.cuty.vasyaproject.Main.*;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Ship extends SpaceObject{
     public int phase, nPhases = 12;
     private long timeLastPhase, timePhaseInterval = 50;
+    private float rotationAngle = 0f;
+    private final float ROTATION_SPEED = 90f;
+    private Vector2 position;
 
     public Ship(float x, float y) {
         super(x, y);
         width = 200;
         height = 200;
     }
+    public Ship(Main main)
+    {
 
+    }
     @Override
     public void move() {
         super.move();
@@ -48,12 +55,14 @@ public class Ship extends SpaceObject{
         }
     }
 
-    public void touchScreen(Vector3 t){
-        vx = (t.x - x)/30;
-        vy = (t.y - y)/30;
+    public void touchScreen(Vector3 t)
+    {
+        vx = (t.x - x) / 30;
+        vy = (t.y - y) / 30;
     }
 
-    public void touchJoystick(Vector3 t, Joystick j){
+    public void touchJoystick(Vector3 t, Joystick j)
+    {
         vx = (t.x - j.x)/10;
         vy = (t.y - j.y)/10;
     }

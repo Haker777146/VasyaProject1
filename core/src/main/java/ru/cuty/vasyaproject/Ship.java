@@ -23,13 +23,13 @@ public class Ship extends SpaceObject{
     }
 
     private void outOfScreen(){
-        if(x<width/2){
+        if(x<width/2.7f){
             vx = 0;
-            x = width/2;
+            x = width/2.7f;
         }
-        if(x>SCR_WIDTH-width/2){
+        if(x>SCR_WIDTH-width/2.7f){
             vx = 0;
-            x = SCR_WIDTH-width/2;
+            x = SCR_WIDTH-width/2.7f;
         }
         if(y<height/2){
             vy = 0;

@@ -30,7 +30,7 @@ public class ScreenGame implements Screen {
     Texture imgShipsAtlas;
     Texture imgShotsAtlas;
     TextureRegion[] imgShip = new TextureRegion[12];
-    TextureRegion[][] imgEnemy = new TextureRegion[4][12];
+    TextureRegion[] imgEnemy = new TextureRegion[12];
     TextureRegion[] imgShot = new TextureRegion[4];
 
     SunButton btnBack;
@@ -54,16 +54,14 @@ public class ScreenGame implements Screen {
 
         imgJoystick = new Texture("joystick.png");
         imgBackGround = new Texture("BackGroundPlay.png");
-        imgShipsAtlas = new Texture("ships_atlas.png");
+        imgShipsAtlas = new Texture("PlayerMagAtlas.png");
         imgShotsAtlas = new Texture("shots.png");
-        for (int i = 0; i < imgShip.length; i++) {
-            imgShip[i] = new TextureRegion(imgShipsAtlas, (i<7?i:12-i)*400, 0, 400, 400);
-        }
-        for(int j = 0; j<imgEnemy.length; j++) {
-            for (int i = 0; i < imgEnemy[j].length; i++) {
-                imgEnemy[j][i] = new TextureRegion(imgShipsAtlas, (i < 7 ? i : 12 - i) * 400, (j+1)*400, 400, 400);
+            for (int i = 0; i < imgShip.length; i++) {
+                imgShip[i] = new TextureRegion(imgShipsAtlas, (i < 6 ? i : 12 - i) * 32, 96, 32, 32);
             }
-        }
+            for (int i = 0; i < imgEnemy.length; i++) {
+                imgEnemy[i] = new TextureRegion(imgShipsAtlas, (i < 6 ? i : 12 - i) * 32, 96, 32, 32);
+            }
         for (int i = 0; i < imgShot.length; i++) {
             imgShot[i] = new TextureRegion(imgShotsAtlas, i*100, 0, 100, 350);
         }
@@ -78,6 +76,8 @@ public class ScreenGame implements Screen {
     @Override
     public void show()
     {
+        ship.x = SCR_WIDTH/2;
+        ship.y = SCR_HEIGHT/2;
         Gdx.input.setInputProcessor(new SunInputProcessor());
     }
 
@@ -116,7 +116,7 @@ public class ScreenGame implements Screen {
             batch.draw(imgJoystick, main.joystick.scrX(), main.joystick.scrY(), main.joystick.width, main.joystick.height);
         }
         for(Enemy e: enemies){
-            batch.draw(imgEnemy[e.type][e.phase], e.scrX(), e.scrY(), e.width, e.height);
+            batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width, e.height);
         }
         for(Shot s: shots){
             batch.draw(imgShot[0], s.scrX(), s.scrY(), s.width, s.height);

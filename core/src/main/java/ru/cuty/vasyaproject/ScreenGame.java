@@ -187,7 +187,7 @@ public class ScreenGame implements Screen {
         public boolean keyTyped(char character) {
             return false;
         }
-
+        ///TouchDown
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             touch.set(screenX, screenY, 0);

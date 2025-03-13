@@ -109,7 +109,8 @@ public class ScreenMenu implements Screen {
     }
 
     @Override
-    public void hide() {
+    public void hide()
+    {
 
     }
 

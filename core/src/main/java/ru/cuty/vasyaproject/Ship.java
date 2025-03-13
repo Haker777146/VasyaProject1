@@ -13,10 +13,10 @@ public class Ship extends SpaceObject{
     private final float ROTATION_SPEED = 90f;
     private Vector2 position;
 
-    public Ship(float x, float y) {
-        super(x, y);
-        width = 200;
-        height = 200;
+    public Ship(float x, float y, float vx, float vy) {
+        super(x, y, vx, vy);
+        width = 150;
+        height = 150;
     }
     public Ship(Main main)
     {

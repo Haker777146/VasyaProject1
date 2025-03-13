@@ -4,10 +4,13 @@ public class SpaceObject {
     public float x, y;
     public float width, height;
     public float vx, vy;
+    public int type;
 
-    public SpaceObject(float x, float y) {
+    public SpaceObject(float x, float y, float vx, float vy) {
         this.x = x;
         this.y = y;
+        this.vx = vx;
+        this.vy = vy;
     }
 
     public SpaceObject() {
@@ -24,5 +27,10 @@ public class SpaceObject {
 
     public float scrY(){
         return y-height/2;
+    }
+
+    public boolean overlap(SpaceObject o)
+    {
+        return Math.abs(x - o.x) < width/2 + o.width/2 && Math.abs(y - o.y) < height/2 + o.height/4;
     }
 }

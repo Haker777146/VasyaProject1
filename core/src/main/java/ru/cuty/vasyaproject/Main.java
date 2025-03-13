@@ -14,6 +14,7 @@ public class Main extends Game {
     public static final int SCREEN = 0, JOYSTICK = 1, ACCELEROMETER = 2;
     public static final boolean LEFT = false, RIGHT = true;
     public static int controls = SCREEN;
+    public static boolean isSoundOn = true;
 
     public SpriteBatch batch;
     public OrthographicCamera camera;
@@ -24,6 +25,7 @@ public class Main extends Game {
     public Music sndMenuMusic, sndPlayScreenMusic;
 
     Joystick joystick;
+    Player player;
     ScreenMenu screenMenu;
     ScreenGame screenGame;
     ScreenSettings screenSettings;
@@ -44,6 +46,7 @@ public class Main extends Game {
         sndPlayScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("PlayScreenMusic.mp3"));
 
         joystick = new Joystick(360, RIGHT);
+        player = new Player();
         screenMenu = new ScreenMenu(this);
         screenGame = new ScreenGame(this);
         screenSettings = new ScreenSettings(this);

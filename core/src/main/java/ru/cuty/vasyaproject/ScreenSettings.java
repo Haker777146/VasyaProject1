@@ -1,5 +1,7 @@
 package ru.cuty.vasyaproject;
 
+import static ru.cuty.vasyaproject.Main.*;
+
 import static ru.cuty.vasyaproject.Main.ACCELEROMETER;
 import static ru.cuty.vasyaproject.Main.JOYSTICK;
 import static ru.cuty.vasyaproject.Main.SCREEN;
@@ -9,6 +11,7 @@ import static ru.cuty.vasyaproject.Main.controls;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +34,7 @@ public class ScreenSettings implements Screen {
     SunButton btnJoystick;
     SunButton btnAccelerometer;
     SunButton btnBack;
+    SunButton btnSound;
 
     public ScreenSettings(Main main) {
         this.main = main;
@@ -43,11 +47,16 @@ public class ScreenSettings implements Screen {
 
 
         imgBackGround = new Texture("MenuBackGround.png");
+
+        loadSettings();
+
         btnSettings = new SunButton("Settings", vasyaFont, 600, 800);
         btnControl = new SunButton("Control", vasyaFont, 100, 620);
         btnScreen = new SunButton("Touch Screen", vasyaRed, 200, 500);
         btnJoystick = new SunButton(main.joystick.getText(), vasyaWhite, 200, 400);
         btnAccelerometer = new SunButton("Accelerometer", vasyaWhite, 200, 300);
+        setFontColorByControls();
+        btnSound = new SunButton(isSoundOn ? "Sound ON" : "Sound OFF", vasyaWhite, 100, 750);
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
     }
 
@@ -63,34 +72,34 @@ public class ScreenSettings implements Screen {
             camera.unproject(touch);
 
             if(btnScreen.hit(touch)){
-                btnScreen.setFont(vasyaRed);
-                btnJoystick.setFont(vasyaWhite);
-                btnAccelerometer.setFont(vasyaWhite);
                 controls = SCREEN;
+                setFontColorByControls();
             }
             if(btnJoystick.hit(touch)){
-                btnScreen.setFont(vasyaWhite);
-                btnJoystick.setFont(vasyaRed);
-                btnAccelerometer.setFont(vasyaWhite);
                 if(controls == JOYSTICK){
                     main.joystick.setSide(!main.joystick.side);
                     btnJoystick.setText(main.joystick.getText());
                 }
-                else {
+                else
+                {
                     controls = JOYSTICK;
                 }
+                setFontColorByControls();
             }
             if(btnAccelerometer.hit(touch)){
                 if(Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)) {
-                    btnScreen.setFont(vasyaWhite);
-                    btnJoystick.setFont(vasyaWhite);
-                    btnAccelerometer.setFont(vasyaRed);
                     controls = ACCELEROMETER;
+                    setFontColorByControls();
                 }
+            }
+            if(btnSound.hit(touch)){
+                isSoundOn = !isSoundOn;
+                btnSound.setText(isSoundOn ? "Sound ON" : "Sound OFF");
             }
             if(btnBack.hit(touch)){
                 main.setScreen(main.screenMenu);
             }
+
         }
         // отрисовка
         batch.setProjectionMatrix(camera.combined);
@@ -121,12 +130,36 @@ public class ScreenSettings implements Screen {
     }
 
     @Override
-    public void hide() {
-
+    public void hide()
+    {
+        saveSettings();
     }
 
     @Override
     public void dispose() {
 
+    }
+    private void setFontColorByControls()
+    {
+        btnScreen.setFont(controls == SCREEN ? vasyaRed : vasyaWhite);
+        btnJoystick.setFont(controls == JOYSTICK ? vasyaRed : vasyaWhite);
+        btnAccelerometer.setFont(controls == ACCELEROMETER ? vasyaRed : vasyaWhite);
+    }
+
+    private void saveSettings(){
+        Preferences prefs = Gdx.app.getPreferences("VasyaProjectSettings");
+        prefs.putString("name", main.player.name);
+        prefs.putInteger("controls", controls);
+        prefs.putBoolean("joystick", main.joystick.side);
+        prefs.putBoolean("sound", isSoundOn);
+        prefs.flush();
+    }
+
+    private void loadSettings(){
+        Preferences prefs = Gdx.app.getPreferences("VasyaProjectSettings");
+        main.player.name = prefs.getString("name", "Noname");
+        controls = prefs.getInteger("controls", SCREEN);
+        main.joystick.setSide(prefs.getBoolean("joystick", RIGHT));
+        isSoundOn = prefs.getBoolean("sound", true);
     }
 }

@@ -56,7 +56,7 @@ public class ScreenSettings implements Screen {
         btnJoystick = new SunButton(main.joystick.getText(), vasyaWhite, 200, 400);
         btnAccelerometer = new SunButton("Accelerometer", vasyaWhite, 200, 300);
         setFontColorByControls();
-        btnSound = new SunButton(isSoundOn ? "Sound ON" : "Sound OFF", vasyaWhite, 100, 750);
+        btnSound = new SunButton(isSoundOn ? "Sound ON" : "Sound OFF", vasyaWhite, 300, 400);
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
     }
 

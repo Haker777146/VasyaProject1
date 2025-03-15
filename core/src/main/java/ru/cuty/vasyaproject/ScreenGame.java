@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Align;
@@ -180,7 +181,7 @@ public class ScreenGame implements Screen {
             batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width, e.height);
         }
         for(Shot s: shots){
-            batch.draw(imgShot[0], s.scrX(), s.scrY(), s.width, s.height);
+            batch.draw(imgShot[0], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);
         }
         batch.draw(imgShip[ship.phase], ship.scrX(), ship.scrY(), ship.width, ship.height);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
@@ -227,7 +228,7 @@ public class ScreenGame implements Screen {
     }
     private void spawnShots(){
         if(TimeUtils.millis()>timeLastShoot+timeShootInterval){
-            shots.add(new Shot(ship.x+40, ship.y-30, 0, 20));
+            shots.add(new Shot(ship.x+40, ship.y-30, 5, 0));
             timeLastShoot = TimeUtils.millis();
         }
     }

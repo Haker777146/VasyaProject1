@@ -187,7 +187,7 @@ public class ScreenGame implements Screen {
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
         vasyaRed.draw(batch, "score:"+main.player.score, 10, 880);
         if(gameOver){
-            vasyaRed.draw(batch, "GAME OVER", 500, 500, SCR_WIDTH, Align.center, true);
+            vasyaRed.draw(batch, "GAME OVER", -10, 475, SCR_WIDTH, Align.center, true);
         }
         batch.end();
     }

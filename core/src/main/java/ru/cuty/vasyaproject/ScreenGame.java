@@ -1,5 +1,6 @@
 package ru.cuty.vasyaproject;
 
+import static java.util.Collections.rotate;
 import static ru.cuty.vasyaproject.Main.*;
 
 import com.badlogic.gdx.Gdx;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Align;
@@ -41,6 +43,7 @@ public class ScreenGame implements Screen {
 
     Space[] space = new Space[2];
     Ship ship;
+    Enemy enemy;
     List<Enemy> enemies = new ArrayList<>();
     List<Shot> shots = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
@@ -109,7 +112,8 @@ public class ScreenGame implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float delta)
+    {
         // касания
         if(Gdx.input.justTouched()){
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -128,10 +132,10 @@ public class ScreenGame implements Screen {
         }
 
         // события
-        for(Enemy e: enemies) e.move();
+        for(Enemy e: enemies) e.move(ship);
         for(Shot s: shots) s.move();
 
-        for(Space s: space) s.move();
+        //for(Space s: space) s.move();
         spawnEnemy();
         for(int i=enemies.size()-1; i>=0; i--) {
             enemies.get(i).move();
@@ -140,7 +144,8 @@ public class ScreenGame implements Screen {
                 if(!gameOver) gameOver();
                 break;
             }
-            if(enemies.get(i).overlap(ship)){
+            if(enemies.get(i).overlap(ship))
+            {
                 enemies.remove(i);
                 gameOver();
             }
@@ -178,7 +183,7 @@ public class ScreenGame implements Screen {
             batch.draw(imgJoystick, main.joystick.scrX(), main.joystick.scrY(), main.joystick.width, main.joystick.height);
         }
         for(Enemy e: enemies){
-            batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width, e.height);
+            batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width/2, e.height/2, e.width, e.height, 1, 1, e.rotation);
         }
         for(Shot s: shots){
             batch.draw(imgShot[0], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);

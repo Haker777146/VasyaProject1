@@ -9,9 +9,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class Ship extends SpaceObject{
     public int phase, nPhases = 12;
     private long timeLastPhase, timePhaseInterval = 50;
-    private float rotationAngle = 0f;
-    private final float ROTATION_SPEED = 90f;
-    private Vector2 position;
 
     public Ship(float x, float y, float vx, float vy) {
         super(x, y, vx, vy);

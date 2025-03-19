@@ -1,8 +1,5 @@
 package ru.cuty.vasyaproject;
 
-import static ru.cuty.vasyaproject.Main.SCR_HEIGHT;
-import static ru.cuty.vasyaproject.Main.SCR_WIDTH;
-
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -13,7 +10,7 @@ public class Enemy extends SpaceObject {
     private long timeLastPhase, timePhaseInterval = 50;
     public int hp;
     public int price;
-    public float rotation;
+    public float rotation = 0;
 
     public Enemy() {
         width = height = 200;
@@ -25,20 +22,27 @@ public class Enemy extends SpaceObject {
         price = 2;
     }
 
-    public void move(Ship ship)
-    {
+    public void move(Ship ship) {
         super.move();
         changePhase();
-        Vector2 direction = new Vector2(ship.x-x, ship.y-y);
-        rotation = 0;
-        if (true) {
-            rotation = direction.angleDeg() + 90;
+
+
+        Vector2 direction = new Vector2(ship.x - x, ship.y - y);
+
+
+        float playerVelocityX = ship.x;
+
+
+        if (playerVelocityX >= x)
+        {
+            rotation = 0;
         } else {
-            rotation = direction.angleDeg() - 90;
+            rotation = 180;
         }
-        float v = 2.5f;
-        vx = v*MathUtils.cos((direction.angleRad()));
-        vy = v*MathUtils.sin((direction.angleRad()));
+
+        float speed = 2.5f;
+        vx = speed * MathUtils.cosDeg(direction.angle());
+        vy = speed * MathUtils.sinDeg(direction.angle());
     }
 
     private void changePhase() {

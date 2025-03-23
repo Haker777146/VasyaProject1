@@ -36,7 +36,9 @@ public class Enemy extends SpaceObject {
         if (playerVelocityX >= x)
         {
             rotation = 0;
-        } else {
+        }
+        else
+        {
             rotation = 180;
         }
 

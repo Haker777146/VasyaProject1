@@ -1,6 +1,5 @@
 package ru.cuty.vasyaproject;
 
-import static java.util.Collections.rotate;
 import static ru.cuty.vasyaproject.Main.*;
 
 import com.badlogic.gdx.Gdx;
@@ -14,15 +13,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
 import java.util.List;
-.
+
 public class ScreenGame implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -186,7 +183,8 @@ public class ScreenGame implements Screen {
             batch.draw(imgJoystick, main.joystick.scrX(), main.joystick.scrY(), main.joystick.width, main.joystick.height);
         }
         for(Enemy e: enemies){
-            batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width/2, e.height/2, e.width, e.height, 1, 1, e.rotation);
+            int flip = e.x>ship.x?-1:1;
+            batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width/2, e.height/2, e.width, e.height, flip, 1, 0);
         }
         for(Shot s: shots){
             batch.draw(imgShot[0], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);

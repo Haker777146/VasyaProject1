@@ -22,7 +22,7 @@ import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
 import java.util.List;
-
+.
 public class ScreenGame implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;

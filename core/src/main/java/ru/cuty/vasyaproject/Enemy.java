@@ -1,5 +1,8 @@
 package ru.cuty.vasyaproject;
 
+import static com.badlogic.gdx.math.MathUtils.random;
+import static ru.cuty.vasyaproject.Main.*;
+
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -10,15 +13,32 @@ public class Enemy extends SpaceObject {
     private long timeLastPhase, timePhaseInterval = 50;
     public int hp;
     public int price;
-    public float rotation = 0;
 
     public Enemy() {
-        width = height = 200;
-        type = MathUtils.random(0, 3);
-        x = MathUtils.random(-200, 1800);
-        y = MathUtils.random(-200, 1800);
+        // Выбираем сторону экрана для спавна
+        int side = MathUtils.random(0, 3); // 0 - лево, 1 - верх, 2 - право, 3 - низ
+
+        switch(side) {
+            case 0: // Спавним слева
+                x = -width; // За левой границей
+                y = MathUtils.random(0, 900); // Случайная высота
+                break;
+            case 1: // Спавним сверху
+                x = MathUtils.random(0, 1600); // Случайная ширина
+                y = 900 + height; // За верхней границей
+                break;
+            case 2: // Спавним справа
+                x = 1600 + width; // За правой границей
+                y = MathUtils.random(0, 900); // Случайная высота
+                break;
+            case 3: // Спавним снизу
+                x = MathUtils.random(0, 1600); // Случайная ширина
+                y = -height; // За нижней границей
+                break;
+        }
+
         width = height = 150;
-        hp = 3;
+        hp = 2;
         price = 2;
     }
 
@@ -26,21 +46,7 @@ public class Enemy extends SpaceObject {
         super.move();
         changePhase();
 
-
         Vector2 direction = new Vector2(ship.x - x, ship.y - y);
-
-
-        float playerVelocityX = ship.x;
-
-
-        if (playerVelocityX >= x)
-        {
-            rotation = 0;
-        }
-        else
-        {
-            rotation = 180;
-        }
 
         float speed = 2.5f;
         vx = speed * MathUtils.cosDeg(direction.angle());

@@ -42,6 +42,7 @@ public class ScreenGame implements Screen {
 
     Space[] space = new Space[2];
     Ship ship;
+    Shot shotes;
     List<Enemy> enemies = new ArrayList<>();
     List<Shot> shots = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
@@ -189,7 +190,8 @@ public class ScreenGame implements Screen {
         for(Shot s: shots){
             batch.draw(imgShot[0], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);
         }
-        batch.draw(imgShip[ship.phase], ship.scrX(), ship.scrY(), ship.width, ship.height);
+        int flip = ship.vx>0?1:-1;
+            batch.draw(imgShip[ship.phase], ship.scrX(), ship.scrY(), ship.width/2, ship.height/2, ship.width, ship.height, flip, 1, 0);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
         vasyaRed.draw(batch, "score:"+main.player.score, 10, 880);
         if(gameOver)
@@ -245,7 +247,14 @@ public class ScreenGame implements Screen {
     }
     private void spawnShots(){
         if(TimeUtils.millis()>timeLastShoot+timeShootInterval){
-            shots.add(new Shot(ship.x+40, ship.y-30, 5, 0));
+            if(ship.vx > 0)
+            {
+                shots.add(new Shot(ship.x + 45, ship.y - 30, 10, 0));
+            }
+            if(ship.vx < 0)
+            {
+                shots.add(new Shot(ship.x-60, ship.y-30, -10, 0));
+            }
             timeLastShoot = TimeUtils.millis();
         }
     }

@@ -5,6 +5,7 @@ import static ru.cuty.vasyaproject.Main.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -40,10 +41,10 @@ public class ScreenGame implements Screen {
     TextureRegion[][] imgFragment = new TextureRegion[5][36];
 
     SunButton btnBack;
+    SunButton btnRestart;
 
     Space[] space = new Space[2];
     Ship ship;
-    Enemy enemy;
     List<Enemy> enemies = new ArrayList<>();
     List<Shot> shots = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
@@ -92,6 +93,7 @@ public class ScreenGame implements Screen {
         }
 
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
+        btnRestart = new SunButton("restart", vasyaRed, 300);
 
         space[0] = new Space(0, 0, 0, -3);
         space[1] = new Space(0, SCR_HEIGHT, 0, -3);
@@ -99,14 +101,12 @@ public class ScreenGame implements Screen {
         {
             players[i] = new Player();
         }
-        ship = new Ship(SCR_WIDTH/2, 200, 0, 0);
+        loadTableOfRecords();
     }
 
     @Override
     public void show()
     {
-        ship.x = SCR_WIDTH/2;
-        ship.y = SCR_HEIGHT/2;
         Gdx.input.setInputProcessor(new SunInputProcessor());
         gameStart();
     }
@@ -124,6 +124,9 @@ public class ScreenGame implements Screen {
                 sndMenuMusic.play();
                 sndPlayScreenMusic.stop();
                 main.setScreen(main.screenMenu);
+            }
+            if(gameOver && btnRestart.hit(touch)){
+                gameStart();
             }
         }
         if(controls == ACCELEROMETER){
@@ -191,8 +194,19 @@ public class ScreenGame implements Screen {
         batch.draw(imgShip[ship.phase], ship.scrX(), ship.scrY(), ship.width, ship.height);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
         vasyaRed.draw(batch, "score:"+main.player.score, 10, 880);
-        if(gameOver){
+        if(gameOver)
+        {
             vasyaRed.draw(batch, "GAME OVER", -10, 475, SCR_WIDTH, Align.center, true);
+            vasyaRed.draw(batch, "score", 500, 900, 200, Align.right, false);
+            vasyaRed.draw(batch, "kills", 620, 900, 200, Align.right, false);
+            for (int i = 0; i < players.length; i++)
+            {
+                vasyaRed.draw(batch, i+1+"", 100, 900-i*70);
+                vasyaRed.draw(batch, players[i].name, 200, 900-i*70);
+                vasyaRed.draw(batch, players[i].score+"", 500, 900-i*70, 200, Align.right, false);
+                vasyaRed.draw(batch, players[i].kills+"", 620, 900-i*70, 200, Align.right, false);
+            }
+            btnRestart.font.draw(batch, btnRestart.text, btnRestart.x, btnRestart.y);
         }
         batch.end();
     }
@@ -253,11 +267,51 @@ public class ScreenGame implements Screen {
         main.player.kills = 0;
     }
 
-    private void gameOver(){
+    private void gameOver()
+    {
         if(isSoundOn) sndExplosion.play();
         spawnFragments(ship);
         ship.x = -10000;
         gameOver = true;
+        players[players.length-1].clone(main.player);
+        sortTableOfRecords();
+        saveTableOfRecords();
+    }
+
+    private void sortTableOfRecords(){
+        for (int j = 0; j < players.length; j++) {
+            for (int i = 0; i < players.length-1; i++) {
+                if(players[i].score < players[i+1].score){
+                    Player tmp = players[i];
+                    players[i] = players[i+1];
+                    players[i+1] = tmp;
+                }
+            }
+        }
+    }
+
+    public void saveTableOfRecords(){
+        Preferences prefs = Gdx.app.getPreferences("VasyaProject");
+        for (int i = 0; i < players.length; i++) {
+            prefs.putString("name"+i, players[i].name);
+            prefs.putInteger("score"+i, players[i].score);
+            prefs.putInteger("kills"+i, players[i].kills);
+        }
+        prefs.flush();
+    }
+
+    private void loadTableOfRecords(){
+        Preferences prefs = Gdx.app.getPreferences("VasyaProject");
+        for (int i = 0; i < players.length; i++) {
+            players[i].name = prefs.getString("name"+i, "Noname");
+            players[i].score = prefs.getInteger("score"+i, 0);
+            players[i].kills = prefs.getInteger("kills"+i, 0);
+        }
+    }
+
+    public void clearTableOfRecords()
+    {
+        for (Player player : players) player.clear();
     }
 
     class SunInputProcessor implements InputProcessor{

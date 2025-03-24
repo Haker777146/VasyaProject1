@@ -24,7 +24,7 @@ public class ScreenGame implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Vector3 touch;
-    private BitmapFont vasyaRed, vasyaOrange, vasyaFont, vasyaWhite;
+    private BitmapFont vasyaRed, vasyaOrange, vasyaFont, vasyaWhite, vasyaRed50, vasyaRed70;
     private Main main;
     private Music sndMenuMusic, sndPlayScreenMusic;
 
@@ -42,7 +42,6 @@ public class ScreenGame implements Screen {
 
     Space[] space = new Space[2];
     Ship ship;
-    Shot shotes;
     List<Enemy> enemies = new ArrayList<>();
     List<Shot> shots = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
@@ -51,7 +50,7 @@ public class ScreenGame implements Screen {
     Sound sndBlaster;
     Sound sndExplosion;
 
-    private long timeLastSpawnEnemy, timeSpawnEnemyInterval = 2000;
+    private long timeLastSpawnEnemy, timeSpawnEnemyInterval = 2500;
     private long timeLastShoot, timeShootInterval = 500;
     private int nFragments = 150;
     private boolean gameOver;
@@ -66,6 +65,8 @@ public class ScreenGame implements Screen {
         vasyaOrange = main.vasyaOrange;
         vasyaFont = main.vasyaFont;
         vasyaWhite = main.vasyaWhite;
+        vasyaRed50 = main.vasyaRed50;
+        vasyaRed70 = main.vasyaRed70;
 
         sndMenuMusic = main.sndMenuMusic;
         sndPlayScreenMusic = main.sndPlayScreenMusic;
@@ -96,7 +97,7 @@ public class ScreenGame implements Screen {
         }
 
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
-        btnRestart = new SunButton("restart", vasyaRed, 300);
+        btnRestart = new SunButton("restart", vasyaRed, 640, 160);
 
         space[0] = new Space(0, 0, 0, -3);
         space[1] = new Space(0, SCR_HEIGHT, 0, -3);
@@ -198,18 +199,18 @@ public class ScreenGame implements Screen {
         int flip = ship.vx>0?1:-1;
             batch.draw(imgShip[ship.phase], ship.scrX(), ship.scrY(), ship.width/2, ship.height/2, ship.width, ship.height, flip, 1, 0);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
-        vasyaRed.draw(batch, "score:"+main.player.score, 10, 880);
+        vasyaRed50.draw(batch, "score:"+main.player.score, 10, 885);
         if(gameOver)
         {
-            vasyaRed.draw(batch, "GAME OVER", -10, 475, SCR_WIDTH, Align.center, true);
-            vasyaRed.draw(batch, "score", 500, 900, 200, Align.right, false);
-            vasyaRed.draw(batch, "kills", 620, 900, 200, Align.right, false);
+            vasyaRed.draw(batch, "GAME OVER", -20, 830, SCR_WIDTH, Align.center, true);
+            vasyaOrange.draw(batch, "score", 800, 720, 200, Align.right, false);
+            vasyaOrange.draw(batch, "kills", 920, 720, 200, Align.right, false);
             for (int i = 0; i < players.length; i++)
             {
-                vasyaRed.draw(batch, i+1+"", 100, 900-i*70);
-                vasyaRed.draw(batch, players[i].name, 200, 900-i*70);
-                vasyaRed.draw(batch, players[i].score+"", 500, 900-i*70, 200, Align.right, false);
-                vasyaRed.draw(batch, players[i].kills+"", 620, 900-i*70, 200, Align.right, false);
+                vasyaOrange.draw(batch, i+1+"", 100+300, 900-230-i*50);
+                vasyaOrange.draw(batch, players[i].name, 200+300, 900-230-i*50);
+                vasyaOrange.draw(batch, players[i].score+"", 500+300, 900-230-i*50, 200, Align.right, false);
+                vasyaOrange.draw(batch, players[i].kills+"", 620+300, 900-230-i*50, 200, Align.right, false);
             }
             btnRestart.font.draw(batch, btnRestart.text, btnRestart.x, btnRestart.y);
         }

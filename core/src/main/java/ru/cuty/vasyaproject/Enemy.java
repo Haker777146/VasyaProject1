@@ -34,7 +34,7 @@ public class Enemy extends SpaceObject {
             case 0: // TankEnemy
                 hp = 1;
                 price = 2;
-                speed = 5;
+                speed = 4;
                 width = height = 100;
                 color = Color.RED;
                 break;
@@ -75,7 +75,8 @@ public class Enemy extends SpaceObject {
         }
     }
 
-    public void move(Ship ship) {
+    public void move(Ship ship)
+    {
         super.move();
         changePhase();
 
@@ -83,6 +84,12 @@ public class Enemy extends SpaceObject {
 
         vx = speed * MathUtils.cosDeg(direction.angle());
         vy = speed * MathUtils.sinDeg(direction.angle());
+
+        if(ship.x == -10000)
+        {
+            vx = 0;
+            vy = 0;
+        }
     }
 
     private void changePhase() {

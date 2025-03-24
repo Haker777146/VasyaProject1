@@ -196,7 +196,7 @@ public class ScreenGame implements Screen {
             batch.draw(imgShot[0], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);
         }
         int flip = ship.vx>0?1:-1;
-            batch.draw(imgShip[ship.phase], ship.scrX(), ship.scrY(), ship.width/2, ship.height/2, ship.width, ship.height, flip, 1, 0);
+        batch.draw(imgShip[ship.phase], ship.scrX(), ship.scrY(), ship.width/2, ship.height/2, ship.width, ship.height, flip, 1, 0);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
         vasyaRed50.draw(batch, "score:"+main.player.score, 10, 885);
         if(gameOver)

@@ -169,7 +169,8 @@ public class ScreenGame implements Screen {
                 if(shots.get(i).overlap(enemies.get(j))){
                     if(isSoundOn) sndExplosion.play();
                     shots.remove(i);
-                    if(--enemies.get(j).hp == 0) {
+                    if(--enemies.get(j).hp == 0)
+                    {
                         main.player.kills++;
                         main.player.score+=enemies.get(j).price;
                         enemies.remove(j);
@@ -284,6 +285,7 @@ public class ScreenGame implements Screen {
         if(isSoundOn) sndExplosion.play();
         spawnFragments(ship);
         ship.x = -10000;
+        enemies.clear();
         gameOver = true;
         players[players.length-1].clone(main.player);
         sortTableOfRecords();

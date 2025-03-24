@@ -84,12 +84,6 @@ public class Enemy extends SpaceObject {
 
         vx = speed * MathUtils.cosDeg(direction.angle());
         vy = speed * MathUtils.sinDeg(direction.angle());
-
-        if(ship.x == -10000)
-        {
-            vx = 0;
-            vy = 0;
-        }
     }
 
     private void changePhase() {

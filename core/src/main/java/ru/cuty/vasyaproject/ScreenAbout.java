@@ -18,7 +18,7 @@ public class ScreenAbout implements Screen {
     private BitmapFont vasyaFont, vasyaRed;
     private Main main;
 
-    Texture imgBackGround;
+    Texture imgBackGround, imgBackGroundForTextAbout;
 
     SunButton btnBack;
 
@@ -31,6 +31,7 @@ public class ScreenAbout implements Screen {
         vasyaRed = main.vasyaRed;
 
         imgBackGround = new Texture("MenuBackGround.png");
+        imgBackGroundForTextAbout = new Texture("BackGroundForTextAbout.png");
 
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
     }
@@ -54,6 +55,7 @@ public class ScreenAbout implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(imgBackGround, 0, 0, SCR_WIDTH, SCR_HEIGHT);
+        batch.draw(imgBackGroundForTextAbout, 135, 60, SCR_WIDTH-300, SCR_HEIGHT-100);
         vasyaFont.draw(batch, "About", 625, 800);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
         batch.end();
@@ -80,7 +82,9 @@ public class ScreenAbout implements Screen {
     }
 
     @Override
-    public void dispose() {
-
+    public void dispose()
+    {
+        imgBackGround.dispose();
+        imgBackGroundForTextAbout.dispose();
     }
 }

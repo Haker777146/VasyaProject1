@@ -24,7 +24,7 @@ public class ScreenSettings implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Vector3 touch;
-    private BitmapFont vasyaFont, vasyaRed, vasyaWhite;
+    private BitmapFont vasyaFont, vasyaRed, vasyaWhite, vasyaOrange;
     private Main main;
     private InputKeyboard keyboard;
 
@@ -43,9 +43,12 @@ public class ScreenSettings implements Screen {
         batch = main.batch;
         camera = main.camera;
         touch = main.touch;
+
         vasyaFont = main.vasyaFont;
         vasyaWhite = main.vasyaWhite;
         vasyaRed = main.vasyaRed;
+        vasyaOrange = main.vasyaOrange;
+
         keyboard = new InputKeyboard(vasyaWhite, SCR_WIDTH, SCR_HEIGHT/2, 7);
 
 

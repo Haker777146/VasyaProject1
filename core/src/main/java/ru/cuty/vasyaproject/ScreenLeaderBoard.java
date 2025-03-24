@@ -16,9 +16,7 @@ public class ScreenLeaderBoard implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Vector3 touch;
-    private BitmapFont vasyaFont;
-    private BitmapFont vasyaRed;
-    private BitmapFont vasyaWhite;
+    private BitmapFont vasyaFont, vasyaOrange, vasyaRed, vasyaWhite;
     private Main main;
 
     Texture imgBackGround;
@@ -34,15 +32,18 @@ public class ScreenLeaderBoard implements Screen {
         batch = main.batch;
         camera = main.camera;
         touch = main.touch;
+
         vasyaFont = main.vasyaFont;
         vasyaRed = main.vasyaRed;
         vasyaWhite = main.vasyaWhite;
+        vasyaOrange = main.vasyaOrange;
+
         players = main.screenGame.players;
 
         imgBackGround = new Texture("MenuBackGround.png");
 
         btnGlobal = new SunButton("Local", vasyaRed, 1350);
-        btnClear = new SunButton("Clear", vasyaRed, 350);
+        btnClear = new SunButton("Clear", vasyaRed, 725, 130);
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
     }
 
@@ -69,16 +70,16 @@ public class ScreenLeaderBoard implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(imgBackGround, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        vasyaFont.draw(batch, "Leaderboard", 900, 800);
+        vasyaFont.draw(batch, "Leaderboard", 510, 820);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
         btnGlobal.font.draw(batch, btnGlobal.text, btnGlobal.x, btnGlobal.y);
-        vasyaWhite.draw(batch, "score", 500, 770, 200, Align.right, false);
-        vasyaWhite.draw(batch, "kills", 620, 770, 200, Align.right, false);
+        vasyaOrange.draw(batch, "score", 800, 700, 200, Align.right, false);
+        vasyaOrange.draw(batch, "kills", 920, 700, 200, Align.right, false);
         for (int i = 0; i < players.length; i++) {
-            vasyaWhite.draw(batch, i+1+"", 100, 700-i*70);
-            vasyaWhite.draw(batch, players[i].name, 200, 700-i*70);
-            vasyaWhite.draw(batch, players[i].score+"", 500, 700-i*70, 200, Align.right, false);
-            vasyaWhite.draw(batch, players[i].kills+"", 620, 700-i*70, 200, Align.right, false);
+            vasyaOrange.draw(batch, i+1+"", 300+105, 650-i*50);
+            vasyaOrange.draw(batch, players[i].name, 400+105, 650-i*50);
+            vasyaOrange.draw(batch, players[i].score+"", 700+105, 650-i*50, 200, Align.right, false);
+            vasyaOrange.draw(batch, players[i].kills+"", 820+105, 650-i*50, 200, Align.right, false);
         }
         btnClear.font.draw(batch, btnClear.text, btnClear.x, btnClear.y);
         batch.end();

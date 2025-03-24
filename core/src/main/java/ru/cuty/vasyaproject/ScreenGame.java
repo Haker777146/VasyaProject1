@@ -24,7 +24,7 @@ public class ScreenGame implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Vector3 touch;
-    private BitmapFont vasyaRed;
+    private BitmapFont vasyaRed, vasyaOrange, vasyaFont, vasyaWhite;
     private Main main;
     private Music sndMenuMusic, sndPlayScreenMusic;
 
@@ -61,7 +61,12 @@ public class ScreenGame implements Screen {
         batch = main.batch;
         camera = main.camera;
         touch = main.touch;
+
         vasyaRed = main.vasyaRed;
+        vasyaOrange = main.vasyaOrange;
+        vasyaFont = main.vasyaFont;
+        vasyaWhite = main.vasyaWhite;
+
         sndMenuMusic = main.sndMenuMusic;
         sndPlayScreenMusic = main.sndPlayScreenMusic;
 

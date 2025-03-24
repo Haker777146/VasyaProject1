@@ -19,9 +19,12 @@ public class Main extends Game {
     public SpriteBatch batch;
     public OrthographicCamera camera;
     public Vector3 touch;
+
     public BitmapFont vasyaFont;
     public BitmapFont vasyaRed;
     public BitmapFont vasyaWhite;
+    public BitmapFont vasyaOrange;
+
     public Music sndMenuMusic, sndPlayScreenMusic;
 
     Joystick joystick;
@@ -38,9 +41,11 @@ public class Main extends Game {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         touch = new Vector3();
+
         vasyaFont = new BitmapFont(Gdx.files.internal("vasyaFont.fnt"));
         vasyaRed = new BitmapFont(Gdx.files.internal("vasyaRed.fnt"));
         vasyaWhite = new BitmapFont(Gdx.files.internal("vasyaWhite.fnt"));
+        vasyaOrange = new BitmapFont(Gdx.files.internal("vasyaOrange.fnt"));
 
         sndMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("MusicMenu.mp3"));
         sndPlayScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("PlayScreenMusic.mp3"));

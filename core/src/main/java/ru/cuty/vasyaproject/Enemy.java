@@ -7,39 +7,72 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import com.badlogic.gdx.graphics.Color;
+
 public class Enemy extends SpaceObject {
     public int type;
     public int phase, nPhases = 12;
     private long timeLastPhase, timePhaseInterval = 50;
     public int hp;
     public int price;
+    public float speed;
+    private Color color;
 
-    public Enemy() {
+    public Color getColor()
+    {
+        return color;
+    }
+
+    public Enemy(int type)
+    {
         // Выбираем сторону экрана для спавна
-        int side = MathUtils.random(0, 3); // 0 - лево, 1 - верх, 2 - право, 3 - низ
+        int side = MathUtils.random(0, 3);
+        this.type = type;
 
-        switch(side) {
-            case 0: // Спавним слева
-                x = -width; // За левой границей
-                y = MathUtils.random(0, 900); // Случайная высота
+        switch(type)
+        {
+            case 0: // TankEnemy
+                hp = 1;
+                price = 2;
+                speed = 5;
+                width = height = 100;
+                color = Color.RED;
                 break;
-            case 1: // Спавним сверху
-                x = MathUtils.random(0, 1600); // Случайная ширина
-                y = 900 + height; // За верхней границей
+            case 1:
+                hp = 3;
+                price = 3;
+                speed = 2.5f;
+                width = height = 150;
+                color = Color.RED;
                 break;
-            case 2: // Спавним справа
-                x = 1600 + width; // За правой границей
-                y = MathUtils.random(0, 900); // Случайная высота
-                break;
-            case 3: // Спавним снизу
-                x = MathUtils.random(0, 1600); // Случайная ширина
-                y = -height; // За нижней границей
+            case 2:
+                hp = 5;
+                price = 5;
+                speed = 1.5f;
+                width = height = 200;
+                color = Color.RED;
                 break;
         }
 
-        width = height = 150;
-        hp = 2;
-        price = 2;
+        switch(side)
+        {
+            case 0:
+                x = -width;
+                y = MathUtils.random(0, 900);
+                break;
+            case 1:
+                x = MathUtils.random(0, 1600);
+                y = 900 + height;
+                break;
+            case 2:
+                x = 1600 + width;
+                y = MathUtils.random(0, 900);
+                break;
+            case 3:
+                x = MathUtils.random(0, 1600);
+                y = -height;
+                break;
+        }
     }
 
     public void move(Ship ship) {
@@ -48,7 +81,6 @@ public class Enemy extends SpaceObject {
 
         Vector2 direction = new Vector2(ship.x - x, ship.y - y);
 
-        float speed = 2.5f;
         vx = speed * MathUtils.cosDeg(direction.angle());
         vy = speed * MathUtils.sinDeg(direction.angle());
     }

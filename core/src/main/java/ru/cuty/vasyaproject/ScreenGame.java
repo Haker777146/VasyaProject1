@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Align;
@@ -144,13 +145,9 @@ public class ScreenGame implements Screen {
 
         //for(Space s: space) s.move();
         spawnEnemy();
-        for(int i=enemies.size()-1; i>=0; i--) {
+        for(int i=enemies.size()-1; i>=0; i--)
+        {
             enemies.get(i).move();
-            if(enemies.get(i).outOfScreen()){
-                enemies.remove(i);
-                if(!gameOver) gameOver();
-                break;
-            }
             if(enemies.get(i).overlap(ship))
             {
                 enemies.remove(i);
@@ -191,7 +188,9 @@ public class ScreenGame implements Screen {
         }
         for(Enemy e: enemies){
             int flip = e.x>ship.x?-1:1;
+            batch.setColor(e.getColor());
             batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width/2, e.height/2, e.width, e.height, flip, 1, 0);
+            batch.setColor(1, 1, 1, 1);
         }
         for(Shot s: shots){
             batch.draw(imgShot[0], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);
@@ -247,7 +246,7 @@ public class ScreenGame implements Screen {
 
     private void spawnEnemy(){
         if(TimeUtils.millis()>timeLastSpawnEnemy+timeSpawnEnemyInterval){
-            enemies.add(new Enemy());
+            enemies.add(new Enemy(MathUtils.random(0,2)));
             timeLastSpawnEnemy = TimeUtils.millis();
         }
     }

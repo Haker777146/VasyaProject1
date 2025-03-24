@@ -24,7 +24,7 @@ public class ScreenSettings implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Vector3 touch;
-    private BitmapFont vasyaFont, vasyaRed, vasyaWhite, vasyaOrange;
+    private BitmapFont vasyaFont, vasyaRed, vasyaWhite, vasyaOrange, vasyaRed50, vasyaRed70;
     private Main main;
     private InputKeyboard keyboard;
 
@@ -48,6 +48,8 @@ public class ScreenSettings implements Screen {
         vasyaWhite = main.vasyaWhite;
         vasyaRed = main.vasyaRed;
         vasyaOrange = main.vasyaOrange;
+        vasyaRed50 = main.vasyaRed50;
+        vasyaRed70 = main.vasyaRed70;
 
         keyboard = new InputKeyboard(vasyaWhite, SCR_WIDTH, SCR_HEIGHT/2, 7);
 
@@ -56,18 +58,20 @@ public class ScreenSettings implements Screen {
 
         loadSettings();
 
-        btnName = new SunButton("Name: "+main.player.name, vasyaRed, 100, 700);
+        btnName = new SunButton("Name: "+main.player.name, vasyaRed70, 100, 700);
         btnControl = new SunButton("Control", vasyaFont, 100, 570);
-        btnScreen = new SunButton("Touch Screen", vasyaRed, 200, 450);
+        btnScreen = new SunButton("Touch Screen", vasyaRed70, 200, 450);
         btnJoystick = new SunButton(main.joystick.getText(), vasyaWhite, 200, 350);
         btnAccelerometer = new SunButton("Accelerometer", vasyaWhite, 200, 250);
         setFontColorByControls();
-        btnSound = new SunButton(isSoundOn ? "Sound ON" : "Sound OFF", vasyaWhite, 200, 150);
+        btnSound = new SunButton(isSoundOn ? "Sound ON" : "Sound OFF", isSoundOn ? vasyaRed70 : vasyaWhite, 200, 150);
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
     }
 
     @Override
-    public void show() {
+    public void show()
+    {
+
     }
 
     @Override
@@ -108,9 +112,15 @@ public class ScreenSettings implements Screen {
                         setFontColorByControls();
                     }
                 }
-                if (btnSound.hit(touch)) {
+                if (btnSound.hit(touch))
+                {
                     isSoundOn = !isSoundOn;
                     btnSound.setText(isSoundOn ? "Sound ON" : "Sound OFF");
+                    if (isSoundOn) {
+                        btnSound.setFont(vasyaRed70);
+                    } else {
+                        btnSound.setFont(vasyaWhite);
+                    }
                 }
                 if (btnBack.hit(touch)) {
                     main.setScreen(main.screenMenu);
@@ -121,7 +131,7 @@ public class ScreenSettings implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(imgBackGround, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        vasyaFont.draw(batch, "SETTINGS", -60, 860, SCR_WIDTH, Align.center, false);
+        vasyaFont.draw(batch, "Settings", -60, 860, SCR_WIDTH, Align.center, false);
         btnName.font.draw(batch, btnName.text, btnName.x, btnName.y);
         btnControl.font.draw(batch, btnControl.text, btnControl.x, btnControl.y);
         btnScreen.font.draw(batch, btnScreen.text, btnScreen.x, btnScreen.y);
@@ -161,9 +171,9 @@ public class ScreenSettings implements Screen {
     }
     private void setFontColorByControls()
     {
-        btnScreen.setFont(controls == SCREEN ? vasyaRed : vasyaWhite);
-        btnJoystick.setFont(controls == JOYSTICK ? vasyaRed : vasyaWhite);
-        btnAccelerometer.setFont(controls == ACCELEROMETER ? vasyaRed : vasyaWhite);
+        btnScreen.setFont(controls == SCREEN ? vasyaRed70 : vasyaWhite);
+        btnJoystick.setFont(controls == JOYSTICK ? vasyaRed70 : vasyaWhite);
+        btnAccelerometer.setFont(controls == ACCELEROMETER ? vasyaRed70 : vasyaWhite);
     }
 
     private void saveSettings(){

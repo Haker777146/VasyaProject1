@@ -20,10 +20,7 @@ public class Main extends Game {
     public OrthographicCamera camera;
     public Vector3 touch;
 
-    public BitmapFont vasyaFont;
-    public BitmapFont vasyaRed;
-    public BitmapFont vasyaWhite;
-    public BitmapFont vasyaOrange;
+    public BitmapFont vasyaFont, vasyaRed, vasyaWhite, vasyaOrange, vasyaRed50, vasyaRed70;
 
     public Music sndMenuMusic, sndPlayScreenMusic;
 
@@ -42,10 +39,12 @@ public class Main extends Game {
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         touch = new Vector3();
 
-        vasyaFont = new BitmapFont(Gdx.files.internal("vasyaFont.fnt"));
-        vasyaRed = new BitmapFont(Gdx.files.internal("vasyaRed.fnt"));
-        vasyaWhite = new BitmapFont(Gdx.files.internal("vasyaWhite.fnt"));
-        vasyaOrange = new BitmapFont(Gdx.files.internal("vasyaOrange.fnt"));
+        vasyaFont = new BitmapFont(Gdx.files.internal("Fonts/vasyaFont.fnt"));
+        vasyaRed = new BitmapFont(Gdx.files.internal("Fonts/vasyaRed.fnt"));
+        vasyaWhite = new BitmapFont(Gdx.files.internal("Fonts/vasyaWhite.fnt"));
+        vasyaOrange = new BitmapFont(Gdx.files.internal("Fonts/vasyaOrange.fnt"));
+        vasyaRed50 = new BitmapFont(Gdx.files.internal("Fonts/vasyaRed50.fnt"));
+        vasyaRed70 = new BitmapFont(Gdx.files.internal("Fonts/vasyaRed70.fnt"));
 
         sndMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("MusicMenu.mp3"));
         sndPlayScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("PlayScreenMusic.mp3"));
@@ -66,6 +65,9 @@ public class Main extends Game {
         vasyaFont.dispose();
         vasyaWhite.dispose();
         vasyaRed.dispose();
+        vasyaRed50.dispose();
+        vasyaOrange.dispose();
+        vasyaRed70.dispose();
         sndMenuMusic.dispose();
         sndPlayScreenMusic.dispose();
     }

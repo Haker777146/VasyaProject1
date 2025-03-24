@@ -39,9 +39,9 @@ public class Ship extends SpaceObject{
             vy = 0;
             y = height/2;
         }
-        if(y>SCR_HEIGHT-height/2){
+        if(y>SCR_HEIGHT-height/2.7f){
             vy = 0;
-            y = SCR_HEIGHT-height/2;
+            y = SCR_HEIGHT-height/2.7f;
         }
     }
 

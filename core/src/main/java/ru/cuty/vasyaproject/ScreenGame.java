@@ -151,7 +151,7 @@ public class ScreenGame implements Screen {
             if(enemies.get(i).overlap(ship))
             {
                 enemies.remove(i);
-                gameOver();
+                if(!gameOver) gameOver();
             }
         }
         if(!gameOver)

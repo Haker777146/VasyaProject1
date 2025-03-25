@@ -145,13 +145,17 @@ public class ScreenGame implements Screen {
 
         //for(Space s: space) s.move();
         spawnEnemy();
-        for(int i=enemies.size()-1; i>=0; i--)
+        for (Enemy enemy : enemies)
         {
-            enemies.get(i).move();
-            if(enemies.get(i).overlap(ship))
+            if (enemy.overlap(ship))
             {
-                enemies.remove(i);
-                if(!gameOver) gameOver();
+                enemies.clear();
+                shots.clear();
+                if (!gameOver)
+                {
+                    gameOver();
+                }
+                break;
             }
         }
         if(!gameOver)
@@ -246,7 +250,7 @@ public class ScreenGame implements Screen {
     }
 
     private void spawnEnemy(){
-        if(TimeUtils.millis()>timeLastSpawnEnemy+timeSpawnEnemyInterval){
+        if(!gameOver && TimeUtils.millis()>timeLastSpawnEnemy+timeSpawnEnemyInterval){
             enemies.add(new Enemy(MathUtils.random(0,2)));
             timeLastSpawnEnemy = TimeUtils.millis();
         }
@@ -283,7 +287,6 @@ public class ScreenGame implements Screen {
     private void gameOver()
     {
         if(isSoundOn) sndExplosion.play();
-        spawnFragments(ship);
         ship.x = -10000;
         gameOver = true;
         players[players.length-1].clone(main.player);

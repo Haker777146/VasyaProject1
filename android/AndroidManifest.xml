@@ -8,12 +8,12 @@
       android:icon="@drawable/ic_launcher"
       android:isGame="true"
       android:appCategory="game"
-      android:label="VasyaProject"
+      android:label="World of Magic"
       tools:ignore="UnusedAttribute"
       android:theme="@style/GdxTheme">
     <activity
         android:name="ru.cuty.vasyaproject.android.AndroidLauncher"
-        android:label="VasyaProject"
+        android:label="World of Magic"
         android:screenOrientation="landscape"
         android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
         android:exported="true">

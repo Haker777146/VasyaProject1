@@ -20,7 +20,7 @@ public class Main extends Game {
     public OrthographicCamera camera;
     public Vector3 touch;
 
-    public BitmapFont vasyaFont, vasyaRed, vasyaWhite, vasyaOrange, vasyaRed50, vasyaRed70;
+    public BitmapFont vasyaFont, vasyaRed, vasyaWhite, vasyaOrange, vasyaRed50, vasyaRed70, vasyaGreen50;
 
     public Music sndMenuMusic, sndPlayScreenMusic;
 
@@ -45,6 +45,7 @@ public class Main extends Game {
         vasyaOrange = new BitmapFont(Gdx.files.internal("Fonts/vasyaOrange.fnt"));
         vasyaRed50 = new BitmapFont(Gdx.files.internal("Fonts/vasyaRed50.fnt"));
         vasyaRed70 = new BitmapFont(Gdx.files.internal("Fonts/vasyaRed70.fnt"));
+        vasyaGreen50 = new BitmapFont(Gdx.files.internal("Fonts/vasyaGreen50.fnt"));
 
         sndMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("MusicMenu.mp3"));
         sndPlayScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("PlayScreenMusic.mp3"));
@@ -62,12 +63,15 @@ public class Main extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+
         vasyaFont.dispose();
         vasyaWhite.dispose();
         vasyaRed.dispose();
         vasyaRed50.dispose();
         vasyaOrange.dispose();
         vasyaRed70.dispose();
+        vasyaGreen50.dispose();
+
         sndMenuMusic.dispose();
         sndPlayScreenMusic.dispose();
     }

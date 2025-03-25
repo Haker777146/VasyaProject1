@@ -247,6 +247,9 @@ public class ScreenGame implements Screen {
         imgShipsAtlas.dispose();
         imgJoystick.dispose();
         imgShotsAtlas.dispose();
+        sndExplosion.dispose();
+        sndBlaster.dispose();
+        sndMenuMusic.dispose();
     }
 
     private void spawnEnemy(){
@@ -256,13 +259,16 @@ public class ScreenGame implements Screen {
         }
     }
     private void spawnShots(){
-        if(TimeUtils.millis()>timeLastShoot+timeShootInterval){
+        if(TimeUtils.millis()>timeLastShoot+timeShootInterval)
+        {
             if(ship.vx > 0)
             {
+                if(isSoundOn) sndBlaster.play();
                 shots.add(new Shot(ship.x + 45, ship.y - 30, 10, 0));
             }
             if(ship.vx < 0)
             {
+                if(isSoundOn) sndBlaster.play();
                 shots.add(new Shot(ship.x-60, ship.y-30, -10, 0));
             }
             timeLastShoot = TimeUtils.millis();

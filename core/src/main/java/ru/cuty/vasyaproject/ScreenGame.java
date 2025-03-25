@@ -285,7 +285,6 @@ public class ScreenGame implements Screen {
         if(isSoundOn) sndExplosion.play();
         spawnFragments(ship);
         ship.x = -10000;
-        enemies.clear();
         gameOver = true;
         players[players.length-1].clone(main.player);
         sortTableOfRecords();

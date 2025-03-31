@@ -11,6 +11,7 @@ import static ru.cuty.vasyaproject.Main.controls;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -34,9 +35,15 @@ public class ScreenSettings implements Screen {
     SunButton btnScreen;
     SunButton btnJoystick;
     SunButton btnAccelerometer;
+
     SunButton btnBack;
     SunButton btnSound;
     SunButton btnName;
+
+    SunButton btnGame_difficulty;
+    SunButton btnNormal;
+    SunButton btnHard;
+    SunButton btnExtreme;
 
     public ScreenSettings(Main main) {
         this.main = main;
@@ -64,8 +71,13 @@ public class ScreenSettings implements Screen {
         btnJoystick = new SunButton(main.joystick.getText(), vasyaWhite, 200, 350);
         btnAccelerometer = new SunButton("Accelerometer", vasyaWhite, 200, 250);
         setFontColorByControls();
-        btnSound = new SunButton(isSoundOn ? "Sound ON" : "Sound OFF", isSoundOn ? vasyaRed70 : vasyaWhite, 200, 150);
+        btnSound = new SunButton(isSoundOn ? "Sound ON" : "Sound OFF", isSoundOn ? vasyaRed70 : vasyaWhite, 880, 700);
+        btnGame_difficulty = new SunButton("Game difficulty",vasyaFont,880,570);
+        btnNormal = new SunButton("Normal",vasyaRed70,980,450);
+        btnHard = new SunButton("Hard",vasyaWhite,980,350);
+        btnExtreme = new SunButton("Extreme",vasyaWhite,980,250);
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
+        setFontColorByDifficulty_game();
     }
 
     @Override
@@ -77,12 +89,15 @@ public class ScreenSettings implements Screen {
     @Override
     public void render(float delta) {
         // касания
-        if(Gdx.input.justTouched()){
+        if(Gdx.input.justTouched())
+        {
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touch);
 
-            if(keyboard.isKeyboardShow) {
-                if (keyboard.touch(touch)) {
+            if(keyboard.isKeyboardShow)
+            {
+                if (keyboard.touch(touch))
+                {
                     main.player.name = keyboard.getText();
                     btnName.setText("Name: "+main.player.name);
                 }
@@ -122,6 +137,21 @@ public class ScreenSettings implements Screen {
                         btnSound.setFont(vasyaWhite);
                     }
                 }
+                if(btnNormal.hit(touch))
+                {
+                    difficulty_game = Normal;
+                    setFontColorByDifficulty_game();
+                }
+                if(btnHard.hit(touch))
+                {
+                    difficulty_game = Hard;
+                    setFontColorByDifficulty_game();
+                }
+                if(btnExtreme.hit(touch))
+                {
+                    difficulty_game = Extreme;
+                    setFontColorByDifficulty_game();
+                }
                 if (btnBack.hit(touch)) {
                     main.setScreen(main.screenMenu);
                 }
@@ -138,6 +168,10 @@ public class ScreenSettings implements Screen {
         btnJoystick.font.draw(batch, btnJoystick.text, btnJoystick.x, btnJoystick.y);
         btnAccelerometer.font.draw(batch, btnAccelerometer.text, btnAccelerometer.x, btnAccelerometer.y);
         btnSound.font.draw(batch, btnSound.text, btnSound.x, btnSound.y);
+        btnGame_difficulty.font.draw(batch, btnGame_difficulty.text, btnGame_difficulty.x, btnGame_difficulty.y);
+        btnNormal.font.draw(batch, btnNormal.text, btnNormal.x, btnNormal.y);
+        btnHard.font.draw(batch, btnHard.text, btnHard.x, btnHard.y);
+        btnExtreme.font.draw(batch, btnExtreme.text, btnExtreme.x, btnExtreme.y);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
         keyboard.draw(batch);
         batch.end();
@@ -175,6 +209,12 @@ public class ScreenSettings implements Screen {
         btnJoystick.setFont(controls == JOYSTICK ? vasyaRed70 : vasyaWhite);
         btnAccelerometer.setFont(controls == ACCELEROMETER ? vasyaRed70 : vasyaWhite);
     }
+    private void setFontColorByDifficulty_game()
+    {
+        btnNormal.setFont(difficulty_game == Normal ? vasyaRed70 : vasyaWhite);
+        btnHard.setFont(difficulty_game == Hard ? vasyaRed70 : vasyaWhite);
+        btnExtreme.setFont(difficulty_game == Extreme ? vasyaRed70 : vasyaWhite);
+    }
 
     private void saveSettings(){
         Preferences prefs = Gdx.app.getPreferences("VasyaProjectSettings");
@@ -182,6 +222,7 @@ public class ScreenSettings implements Screen {
         prefs.putInteger("controls", controls);
         prefs.putBoolean("joystick", main.joystick.side);
         prefs.putBoolean("sound", isSoundOn);
+        prefs.putInteger("difficulty_game", difficulty_game);
         prefs.flush();
     }
 
@@ -191,5 +232,6 @@ public class ScreenSettings implements Screen {
         controls = prefs.getInteger("controls", SCREEN);
         main.joystick.setSide(prefs.getBoolean("joystick", RIGHT));
         isSoundOn = prefs.getBoolean("sound", true);
+        difficulty_game = prefs.getInteger("difficulty_game", Normal);
     }
 }

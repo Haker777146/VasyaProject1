@@ -15,6 +15,8 @@ public class Main extends Game {
     public static final boolean LEFT = false, RIGHT = true;
     public static int controls = SCREEN;
     public static boolean isSoundOn = true;
+    public static final int Normal = 0, Hard = 1, Extreme = 2;
+    public static int difficulty_game = Normal;
 
     public SpriteBatch batch;
     public OrthographicCamera camera;

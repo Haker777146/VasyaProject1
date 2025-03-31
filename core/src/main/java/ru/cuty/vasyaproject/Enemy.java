@@ -28,30 +28,86 @@ public class Enemy extends SpaceObject {
         // Выбираем сторону экрана для спавна
         int side = MathUtils.random(0, 3);
         this.type = type;
-
-        switch(type)
+        if(difficulty_game == Normal)
         {
-            case 0: // TankEnemy
-                hp = 1;
-                price = 2;
-                speed = 4;
-                width = height = 100;
-                color = Color.RED;
-                break;
-            case 1:
-                hp = 3;
-                price = 3;
-                speed = 2.5f;
-                width = height = 150;
-                color = Color.RED;
-                break;
-            case 2:
-                hp = 5;
-                price = 5;
-                speed = 1.5f;
-                width = height = 200;
-                color = Color.RED;
-                break;
+            switch (type)
+            {
+                case 0: // TankEnemy
+                    hp = 1;
+                    price = 2;
+                    speed = 4;
+                    width = height = 100;
+                    color = Color.RED;
+                    break;
+                case 1:
+                    hp = 3;
+                    price = 3;
+                    speed = 2.5f;
+                    width = height = 150;
+                    color = Color.RED;
+                    break;
+                case 2:
+                    hp = 5;
+                    price = 5;
+                    speed = 1.5f;
+                    width = height = 200;
+                    color = Color.RED;
+                    break;
+            }
+        }
+        if(difficulty_game == Hard)
+        {
+            switch (type)
+            {
+                case 0:
+                    hp = 2;
+                    price = 2;
+                    speed = 5;
+                    width = height = 90;
+                    color = Color.RED;
+                    break;
+                case 1:
+                    hp = 4;
+                    price = 2;
+                    speed = 4;
+                    width = height = 150;
+                    color = Color.RED;
+                    break;
+                case 2:
+                    hp = 6;
+                    price = 5;
+                    speed = 2.5f;
+                    width = height = 210;
+                    color = Color.RED;
+                    break;
+            }
+        }
+        if(difficulty_game == Extreme)
+        {
+            switch (type)
+            {
+                case 0: // TankEnemy
+                    hp = 3;
+                    price = 1;
+                    speed = 6;
+                    width = height = 80;
+                    color = Color.RED;
+                    break;
+                case 1:
+                    hp = 5;
+                    price = 2;
+                    speed = 5;
+                    width = height = 150;
+                    color = Color.RED;
+                    break;
+                case 2:
+                    hp = 7;
+                    price = 3;
+                    speed = 4;
+                    width = height = 220;
+                    color = Color.RED;
+                    break;
+            }
         }
 
         switch(side)

@@ -127,8 +127,8 @@ public class ScreenGame implements Screen {
             if(btnBack.hit(touch))
             {
                 sndMenuMusic.play();
-                sndPlayScreenMusic.stop();
                 main.setScreen(main.screenMenu);
+                sndPlayScreenMusic.stop();
             }
             if(gameOver && btnRestart.hit(touch)){
                 gameStart();
@@ -250,6 +250,7 @@ public class ScreenGame implements Screen {
         sndExplosion.dispose();
         sndBlaster.dispose();
         sndMenuMusic.dispose();
+        sndPlayScreenMusic.dispose();
     }
 
     private void spawnEnemy(){

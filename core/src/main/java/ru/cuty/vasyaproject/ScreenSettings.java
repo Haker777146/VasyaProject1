@@ -38,6 +38,7 @@ public class ScreenSettings implements Screen {
 
     SunButton btnBack;
     SunButton btnSound;
+    SunButton btnMusic;
     SunButton btnName;
 
     SunButton btnGame_difficulty;
@@ -65,17 +66,19 @@ public class ScreenSettings implements Screen {
 
         loadSettings();
 
-        btnName = new SunButton("Name: "+main.player.name, vasyaRed70, 100, 700);
-        btnControl = new SunButton("Control", vasyaFont, 100, 570);
-        btnScreen = new SunButton("Touch Screen", vasyaRed70, 200, 450);
-        btnJoystick = new SunButton(main.joystick.getText(), vasyaWhite, 200, 350);
-        btnAccelerometer = new SunButton("Accelerometer", vasyaWhite, 200, 250);
+        btnName = new SunButton("Name: "+main.player.name, vasyaRed70, 505, 740);
+        btnControl = new SunButton("Control", vasyaFont, 100, 570-65);
+        btnScreen = new SunButton("Touch Screen", vasyaRed70, 200, 450-65);
+        btnJoystick = new SunButton(main.joystick.getText(), vasyaWhite, 200, 350-65);
+        btnAccelerometer = new SunButton("Accelerometer", vasyaWhite, 200, 250-65);
         setFontColorByControls();
-        btnSound = new SunButton(isSoundOn ? "Sound ON" : "Sound OFF", isSoundOn ? vasyaRed70 : vasyaWhite, 880, 700);
-        btnGame_difficulty = new SunButton("Game difficulty",vasyaFont,880,570);
-        btnNormal = new SunButton("Normal",vasyaRed70,980,450);
-        btnHard = new SunButton("Hard",vasyaWhite,980,350);
-        btnExtreme = new SunButton("Extreme",vasyaWhite,980,250);
+        btnSound = new SunButton(isSoundOn ? "Sound ON" : "Sound OFF", isSoundOn ? vasyaRed70 : vasyaWhite, 880, 670-65);
+        btnMusic = new SunButton(isMusicOn ? "Music ON" : "Music OFF", isMusicOn ? vasyaRed70 : vasyaWhite, 100, 670-65);
+        setFontColorByMusicAndSound();
+        btnGame_difficulty = new SunButton("Game difficulty",vasyaFont,880,570-65);
+        btnNormal = new SunButton("Normal",vasyaRed70,980,450-65);
+        btnHard = new SunButton("Hard",vasyaWhite,980,350-65);
+        btnExtreme = new SunButton("Extreme",vasyaWhite,980,250-65);
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
         setFontColorByDifficulty_game();
     }
@@ -130,12 +133,12 @@ public class ScreenSettings implements Screen {
                 if (btnSound.hit(touch))
                 {
                     isSoundOn = !isSoundOn;
-                    btnSound.setText(isSoundOn ? "Sound ON" : "Sound OFF");
-                    if (isSoundOn) {
-                        btnSound.setFont(vasyaRed70);
-                    } else {
-                        btnSound.setFont(vasyaWhite);
-                    }
+                    setFontColorByMusicAndSound();
+                }
+                if (btnMusic.hit(touch))
+                {
+                    isMusicOn = !isMusicOn;
+                    setFontColorByMusicAndSound();
                 }
                 if(btnNormal.hit(touch))
                 {
@@ -168,6 +171,7 @@ public class ScreenSettings implements Screen {
         btnJoystick.font.draw(batch, btnJoystick.text, btnJoystick.x, btnJoystick.y);
         btnAccelerometer.font.draw(batch, btnAccelerometer.text, btnAccelerometer.x, btnAccelerometer.y);
         btnSound.font.draw(batch, btnSound.text, btnSound.x, btnSound.y);
+        btnMusic.font.draw(batch, btnMusic.text, btnMusic.x, btnMusic.y);
         btnGame_difficulty.font.draw(batch, btnGame_difficulty.text, btnGame_difficulty.x, btnGame_difficulty.y);
         btnNormal.font.draw(batch, btnNormal.text, btnNormal.x, btnNormal.y);
         btnHard.font.draw(batch, btnHard.text, btnHard.x, btnHard.y);
@@ -215,13 +219,20 @@ public class ScreenSettings implements Screen {
         btnHard.setFont(difficulty_game == Hard ? vasyaRed70 : vasyaWhite);
         btnExtreme.setFont(difficulty_game == Extreme ? vasyaRed70 : vasyaWhite);
     }
-
+    private void setFontColorByMusicAndSound()
+    {
+        btnMusic.setFont(isMusicOn ? vasyaRed70 : vasyaWhite);
+        btnMusic.setText(isMusicOn ? "Music ON" : "Music OFF");
+        btnSound.setFont(isSoundOn ? vasyaRed70 : vasyaWhite);
+        btnSound.setText(isSoundOn ? "Sound ON" : "Sound OFF");
+    }
     private void saveSettings(){
         Preferences prefs = Gdx.app.getPreferences("VasyaProjectSettings");
         prefs.putString("name", main.player.name);
         prefs.putInteger("controls", controls);
         prefs.putBoolean("joystick", main.joystick.side);
         prefs.putBoolean("sound", isSoundOn);
+        prefs.putBoolean("music", isMusicOn);
         prefs.putInteger("difficulty_game", difficulty_game);
         prefs.flush();
     }
@@ -232,6 +243,7 @@ public class ScreenSettings implements Screen {
         controls = prefs.getInteger("controls", SCREEN);
         main.joystick.setSide(prefs.getBoolean("joystick", RIGHT));
         isSoundOn = prefs.getBoolean("sound", true);
+        isMusicOn = prefs.getBoolean("music", true);
         difficulty_game = prefs.getInteger("difficulty_game", Normal);
     }
 }

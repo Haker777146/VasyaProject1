@@ -117,6 +117,7 @@ public class ScreenMenu implements Screen {
     @Override
     public void dispose()
     {
-
+        sndMenuMusic.dispose();
+        sndPlayScreenMusic.dispose();
     }
 }

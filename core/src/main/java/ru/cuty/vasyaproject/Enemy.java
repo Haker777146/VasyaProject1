@@ -32,7 +32,7 @@ public class Enemy extends SpaceObject {
         {
             switch (type)
             {
-                case 0: // TankEnemy
+                case 0:
                     hp = 1;
                     price = 2;
                     speed = 4;
@@ -86,7 +86,7 @@ public class Enemy extends SpaceObject {
         {
             switch (type)
             {
-                case 0: // TankEnemy
+                case 0:
                     hp = 3;
                     price = 1;
                     speed = 6;

@@ -14,6 +14,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -46,6 +47,8 @@ public class ScreenSettings implements Screen {
     SunButton btnHard;
     SunButton btnExtreme;
 
+    private Music sndMenuMusic, sndPlayScreenMusic;
+
     public ScreenSettings(Main main) {
         this.main = main;
         batch = main.batch;
@@ -58,6 +61,9 @@ public class ScreenSettings implements Screen {
         vasyaOrange = main.vasyaOrange;
         vasyaRed50 = main.vasyaRed50;
         vasyaRed70 = main.vasyaRed70;
+
+        sndMenuMusic = main.sndMenuMusic;
+        sndPlayScreenMusic = main.sndPlayScreenMusic;
 
         keyboard = new InputKeyboard(vasyaWhite, SCR_WIDTH, SCR_HEIGHT/2, 7);
 
@@ -90,7 +96,11 @@ public class ScreenSettings implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float delta)
+    {
+        //музыка
+        if(isMusicOn) sndMenuMusic.play();
+        if (!isMusicOn) sndMenuMusic.pause();
         // касания
         if(Gdx.input.justTouched())
         {

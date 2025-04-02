@@ -119,6 +119,9 @@ public class ScreenGame implements Screen {
     @Override
     public void render(float delta)
     {
+        //музыка
+        if(isMusicOn) sndPlayScreenMusic.play();
+        if (!isMusicOn) sndPlayScreenMusic.stop();
         // касания
         if(Gdx.input.justTouched()){
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -126,9 +129,9 @@ public class ScreenGame implements Screen {
 
             if(btnBack.hit(touch))
             {
-                sndMenuMusic.play();
                 main.setScreen(main.screenMenu);
                 sndPlayScreenMusic.stop();
+                if(isMusicOn) sndMenuMusic.play();
             }
             if(gameOver && btnRestart.hit(touch)){
                 gameStart();
@@ -249,8 +252,6 @@ public class ScreenGame implements Screen {
         imgShotsAtlas.dispose();
         sndExplosion.dispose();
         sndBlaster.dispose();
-        sndMenuMusic.dispose();
-        sndPlayScreenMusic.dispose();
     }
 
     private void spawnEnemy(){

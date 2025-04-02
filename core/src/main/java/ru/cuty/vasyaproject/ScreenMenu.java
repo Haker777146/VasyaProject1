@@ -38,8 +38,6 @@ public class ScreenMenu implements Screen {
         sndMenuMusic = main.sndMenuMusic;
         sndPlayScreenMusic = main.sndPlayScreenMusic;
 
-        sndMenuMusic.play();
-
         imgBackGround = new Texture("MenuBackGround.png");
 
         btnPlay = new SunButton("Play", font, 90, 740);
@@ -56,7 +54,11 @@ public class ScreenMenu implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float delta)
+    {
+        //музыка
+        if(isMusicOn) sndMenuMusic.play();
+        if (!isMusicOn) sndMenuMusic.pause();
         // касания
         if(Gdx.input.justTouched()){
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -64,9 +66,9 @@ public class ScreenMenu implements Screen {
 
             if(btnPlay.hit(touch.x, touch.y))
             {
-                sndMenuMusic.pause();
                 main.setScreen(main.screenGame);
-                sndPlayScreenMusic.play();
+                sndMenuMusic.pause();
+                if(isMusicOn)sndPlayScreenMusic.play();
             }
             if(btnSettings.hit(touch.x, touch.y)){
                 main.setScreen(main.screenSettings);
@@ -117,7 +119,6 @@ public class ScreenMenu implements Screen {
     @Override
     public void dispose()
     {
-        sndMenuMusic.dispose();
-        sndPlayScreenMusic.dispose();
+
     }
 }

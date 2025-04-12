@@ -46,6 +46,7 @@ public class ScreenGame implements Screen {
     List<Enemy> enemies = new ArrayList<>();
     List<Shot> shots = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
+    private List<Integer> spawnedRanges = new ArrayList<>();
     Player[] players = new Player[10];
 
     Sound sndBlaster;
@@ -55,6 +56,7 @@ public class ScreenGame implements Screen {
     private long timeLastShoot, timeShootInterval = 500;
     private int nFragments = 150;
     private boolean gameOver;
+    private boolean isBossAlive = false;
 
     public ScreenGame(Main main) {
         this.main = main;
@@ -119,6 +121,16 @@ public class ScreenGame implements Screen {
     @Override
     public void render(float delta)
     {
+        // Проверяем, жив ли босс
+        isBossAlive = false;
+        for (Enemy enemy : enemies)
+        {
+            if (enemy.type == 3)
+            {
+                isBossAlive = true;
+                break;
+            }
+        }
         //музыка
         if(isMusicOn) sndPlayScreenMusic.play();
         if (!isMusicOn) sndPlayScreenMusic.stop();
@@ -254,9 +266,33 @@ public class ScreenGame implements Screen {
         sndBlaster.dispose();
     }
 
-    private void spawnEnemy(){
-        if(!gameOver && TimeUtils.millis()>timeLastSpawnEnemy+timeSpawnEnemyInterval){
-            enemies.add(new Enemy(MathUtils.random(0,2)));
+    private void spawnEnemy()
+    {
+        if (!gameOver && TimeUtils.millis() > timeLastSpawnEnemy + timeSpawnEnemyInterval)
+        {
+            // Спавн обычных врагов (0,1,2), только если нет босса
+            if (!isBossAlive)
+            {
+                enemies.add(new Enemy(MathUtils.random(0, 2)));
+            }
+
+            // Спавн босса (тип 3) в диапазоне 30±5 (25-35, 55-65...)
+            if (main.player.score >= 25)
+            {
+                int baseRange = ((main.player.score + 5) / 30) * 30; // Округление до ближайшего 30
+                int remainder = main.player.score % 30;
+                boolean isInSpawnZone = (remainder >= 25 || remainder <= 5);
+
+                if (isInSpawnZone && !spawnedRanges.contains(baseRange) && !isBossAlive)
+                {
+                    enemies.clear();
+                    Enemy boss = new Enemy(3);
+                    enemies.add(boss);
+                    spawnedRanges.add(baseRange);
+                    isBossAlive = true;
+                }
+            }
+
             timeLastSpawnEnemy = TimeUtils.millis();
         }
     }
@@ -288,6 +324,8 @@ public class ScreenGame implements Screen {
         enemies.clear();
         fragments.clear();
         shots.clear();
+        spawnedRanges.clear();
+        isBossAlive = false;
         main.player.score = 0;
         main.player.kills = 0;
     }

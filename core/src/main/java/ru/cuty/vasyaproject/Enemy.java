@@ -53,6 +53,13 @@ public class Enemy extends SpaceObject {
                     width = height = 200;
                     color = Color.RED;
                     break;
+                case 3:
+                    hp = 10;
+                    price = 10;
+                    speed = 2;
+                    width = height = 300;
+                    color = Color.RED;
+                    break;
             }
         }
         if(difficulty_game == Hard)

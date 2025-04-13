@@ -168,14 +168,17 @@ public class ScreenGame implements Screen {
             ship.move();
             spawnShots();
         }
-        for(int i=shots.size()-1; i>=0; i--){
+        for(int i=shots.size()-1; i>=0; i--)
+        {
             shots.get(i).move();
             if(shots.get(i).outOfScreen()) {
                 shots.remove(i);
                 break;
             }
-            for (int j = enemies.size()-1; j >= 0; j--) {
-                if(shots.get(i).overlap(enemies.get(j))){
+            for (int j = enemies.size()-1; j >= 0; j--)
+            {
+                if(shots.get(i).type == 0 && shots.get(i).overlap(enemies.get(j)))
+                {
                     if(isSoundOn) sndExplosion.play();
                     shots.remove(i);
                     if(--enemies.get(j).hp == 0)
@@ -184,6 +187,12 @@ public class ScreenGame implements Screen {
                         main.player.score+=enemies.get(j).price;
                         enemies.remove(j);
                     }
+                    break;
+                }
+                if(shots.get(i).type == 1 && shots.get(i).overlap(ship))
+                {
+                    if (isSoundOn) sndExplosion.play();
+                    shots.remove(i);
                     break;
                 }
             }
@@ -298,6 +307,13 @@ public class ScreenGame implements Screen {
             {
                 if(isSoundOn) sndBlaster.play();
                 shots.add(new Shot(ship.x-60, ship.y-30, -10, 0, 0));
+            }
+            for (Enemy enemy : enemies)
+            {
+                if (enemy.type == 3)
+                {  // Проверка, что это босс
+                    shots.add(new Shot(enemy.x - 60, enemy.y - 30, -10, 0, 1));
+                }
             }
             timeLastShoot = TimeUtils.millis();
         }

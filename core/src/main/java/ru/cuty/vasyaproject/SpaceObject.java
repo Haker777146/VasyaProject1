@@ -6,7 +6,7 @@ public class SpaceObject {
     public float vx, vy;
     public int type;
 
-    public SpaceObject(float x, float y, float vx, float vy) {
+    public SpaceObject(float x, float y, float vx, float vy, int type) {
         this.x = x;
         this.y = y;
         this.vx = vx;

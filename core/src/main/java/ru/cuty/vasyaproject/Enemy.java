@@ -1,6 +1,5 @@
 package ru.cuty.vasyaproject;
 
-import static com.badlogic.gdx.math.MathUtils.random;
 import static ru.cuty.vasyaproject.Main.*;
 
 import com.badlogic.gdx.math.MathUtils;

@@ -36,7 +36,6 @@ public class ScreenGame implements Screen {
     TextureRegion[] imgShip = new TextureRegion[12];
     TextureRegion[] imgEnemy = new TextureRegion[36];
     TextureRegion[] imgShot = new TextureRegion[4];
-    TextureRegion[][] imgFragment = new TextureRegion[5][36];
 
     SunButton btnBack;
     SunButton btnRestart;
@@ -54,7 +53,6 @@ public class ScreenGame implements Screen {
 
     private long timeLastSpawnEnemy, timeSpawnEnemyInterval = 2500;
     private long timeLastShoot, timeShootInterval = 500;
-    private int nFragments = 150;
     private boolean gameOver;
     private boolean isBossAlive = false;
 
@@ -89,14 +87,6 @@ public class ScreenGame implements Screen {
             }
         for (int i = 0; i < imgShot.length; i++) {
             imgShot[i] = new TextureRegion(imgShotsAtlas, i*250, 0, 250, 250);
-        }
-        int k = (int) Math.sqrt(imgFragment[0].length);
-        int size = 400/k;
-        for(int j = 0; j<imgFragment.length; j++) {
-            for (int i = 0; i < imgFragment[j].length; i++) {
-                if(j==imgFragment.length-1) imgFragment[j][i] = new TextureRegion(imgShip[0], i%k*size, i/k*size, size, size);
-                else imgFragment[j][i] = new TextureRegion(imgEnemy[0], i%k*size, i/k*size, size, size);
-            }
         }
 
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
@@ -302,19 +292,14 @@ public class ScreenGame implements Screen {
             if(ship.vx > 0)
             {
                 if(isSoundOn) sndBlaster.play();
-                shots.add(new Shot(ship.x + 45, ship.y - 30, 10, 0));
+                shots.add(new Shot(ship.x + 45, ship.y - 30, 10, 0, 0));
             }
             if(ship.vx < 0)
             {
                 if(isSoundOn) sndBlaster.play();
-                shots.add(new Shot(ship.x-60, ship.y-30, -10, 0));
+                shots.add(new Shot(ship.x-60, ship.y-30, -10, 0, 0));
             }
             timeLastShoot = TimeUtils.millis();
-        }
-    }
-    private void spawnFragments(SpaceObject o){
-        for (int i = 0; i < nFragments; i++) {
-            fragments.add(new Fragment(o.x, o.y, o.type, imgFragment[0].length));
         }
     }
 

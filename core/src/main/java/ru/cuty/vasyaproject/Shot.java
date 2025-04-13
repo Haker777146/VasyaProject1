@@ -3,17 +3,22 @@ package ru.cuty.vasyaproject;
 import static ru.cuty.vasyaproject.Main.SCR_HEIGHT;
 import static ru.cuty.vasyaproject.Main.SCR_WIDTH;
 
-import com.badlogic.gdx.math.MathUtils;
-
 public class Shot extends SpaceObject{
 
     float rotation,vRotation;
-    public Shot(float x, float y, float vx, float vy)
+    public Shot(float x, float y, float vx, float vy, int type)
     {
-        super(x, y, vx, vy);
-        width = 70;
-        height = 70;
+        super(x, y, vx, vy, type);
         vRotation = -10;
+        switch (type)
+        {
+            case 0:
+                width = height = 70;
+                break;
+            case 1:
+                width = height = 80;
+                break;
+        }
     }
     @Override
     public void move()

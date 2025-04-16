@@ -44,7 +44,6 @@ public class ScreenGame implements Screen {
     Ship ship;
     List<Enemy> enemies = new ArrayList<>();
     List<Shot> shots = new ArrayList<>();
-    List<Fragment> fragments = new ArrayList<>();
     private List<Integer> spawnedRanges = new ArrayList<>();
     Player[] players = new Player[10];
 
@@ -323,7 +322,6 @@ public class ScreenGame implements Screen {
         gameOver = false;
         ship = new Ship(SCR_WIDTH/2, 200, 0, 0);
         enemies.clear();
-        fragments.clear();
         shots.clear();
         spawnedRanges.clear();
         isBossAlive = false;

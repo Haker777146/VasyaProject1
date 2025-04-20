@@ -192,6 +192,7 @@ public class ScreenGame implements Screen {
                 {
                     if (isSoundOn) sndExplosion.play();
                     shots.remove(i);
+                    gameOver();
                     break;
                 }
             }

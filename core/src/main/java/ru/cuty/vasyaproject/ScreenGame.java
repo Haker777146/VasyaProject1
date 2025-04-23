@@ -295,24 +295,32 @@ public class ScreenGame implements Screen {
             timeLastSpawnEnemy = TimeUtils.millis();
         }
     }
-    private void spawnShots(){
-        if(TimeUtils.millis()>timeLastShoot+timeShootInterval)
-        {
-            if(ship.vx > 0)
-            {
-                if(isSoundOn) sndBlaster.play();
-                shots.add(new Shot(ship.x + 45, ship.y - 30, 10, 0, 0));
+    private void spawnShots() {
+        if (TimeUtils.millis() > timeLastShoot + timeShootInterval) {
+            // Снаряды игрока
+            if (ship.vx != 0) {
+                if (isSoundOn) sndBlaster.play();
+                float offsetX = ship.vx > 0 ? 45 : -60;
+                shots.add(new Shot(ship.x + offsetX, ship.y - 30, ship.vx > 0 ? 10 : -10, 0, 0));
             }
-            if(ship.vx < 0)
-            {
-                if(isSoundOn) sndBlaster.play();
-                shots.add(new Shot(ship.x-60, ship.y-30, -10, 0, 0));
-            }
-            for (Enemy enemy : enemies)
-            {
+
+            // Снаряды босса (8 направлений)
+            for (Enemy enemy : enemies) {
                 if (enemy.type == 3)
-                {  // Проверка, что это босс
-                    shots.add(new Shot(enemy.x - 60, enemy.y - 30, -10, 0, 1));
+                {
+                    float centerX = enemy.x - 40; // Центр по X
+                    float centerY = enemy.y - 50; // Центр по Y
+                    float speed = 7f; // Скорость снарядов
+
+                    // 8 направлений
+                    for (int i = 0; i < 8; i++) {
+                        float angle = i * 45f; // Угол в градусах
+                        float vx = speed * MathUtils.cosDeg(angle);
+                        float vy = speed * MathUtils.sinDeg(angle);
+                        shots.add(new Shot(centerX, centerY, vx, vy, 1));
+                    }
+                    if (isSoundOn) sndBlaster.play();
+                    break; // Обрабатываем только первого найденного босса
                 }
             }
             timeLastShoot = TimeUtils.millis();

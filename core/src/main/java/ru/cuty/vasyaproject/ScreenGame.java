@@ -330,9 +330,9 @@ public class ScreenGame implements Screen {
     private void gameStart(){
         gameOver = false;
         ship = new Ship(SCR_WIDTH/2, 200, 0, 0);
+        spawnedRanges.clear();
         enemies.clear();
         shots.clear();
-        spawnedRanges.clear();
         isBossAlive = false;
         main.player.score = 0;
         main.player.kills = 0;
@@ -343,6 +343,15 @@ public class ScreenGame implements Screen {
         if(isSoundOn) sndExplosion.play();
         ship.x = -10000;
         gameOver = true;
+        for (int i = enemies.size()-1; i >= 0; i--)
+        {
+            if (enemies.get(i).type == 3)
+            {
+                enemies.remove(i);
+                isBossAlive = false; // Сбрасываем флаг босса
+                break;
+            }
+        }
         players[players.length-1].clone(main.player);
         sortTableOfRecords();
         saveTableOfRecords();

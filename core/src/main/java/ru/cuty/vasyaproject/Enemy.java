@@ -66,14 +66,14 @@ public class Enemy extends SpaceObject {
             switch (type)
             {
                 case 0:
-                    hp = 1;
-                    price = 2;
+                    hp = 2;
+                    price = 3;
                     speed = 5;
                     width = height = 90;
                     color = Color.RED;
                     break;
                 case 1:
-                    hp = 3;
+                    hp = 4;
                     price = 3;
                     speed = 4;
                     width = height = 150;
@@ -88,7 +88,7 @@ public class Enemy extends SpaceObject {
                     break;
                 case 3:
                     hp = 13;
-                    price = 10;
+                    price = 8;
                     speed = 3;
                     width = height = 300;
                     color = Color.RED;
@@ -100,29 +100,29 @@ public class Enemy extends SpaceObject {
             switch (type)
             {
                 case 0:
-                    hp = 2;
-                    price = 1;
+                    hp = 3;
+                    price = 2;
                     speed = 6;
                     width = height = 80;
                     color = Color.RED;
                     break;
                 case 1:
-                    hp = 4;
+                    hp = 5;
                     price = 2;
                     speed = 5;
                     width = height = 150;
                     color = Color.RED;
                     break;
                 case 2:
-                    hp = 6;
+                    hp = 7;
                     price = 4;
                     speed = 4;
                     width = height = 220;
                     color = Color.RED;
                     break;
                 case 3:
-                    hp = 15;
-                    price = 9;
+                    hp = 17;
+                    price = 5;
                     speed = 5;
                     width = height = 300;
                     color = Color.RED;

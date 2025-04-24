@@ -31,17 +31,19 @@ public class ScreenGame implements Screen {
 
     Texture imgJoystick;
     Texture imgBackGround;
-    Texture imgShipsAtlas;
+    Texture imgPlayersAtlas;
+    Texture imgEnemyAtlas;
     Texture imgShotsAtlas;
     TextureRegion[] imgShip = new TextureRegion[12];
     TextureRegion[] imgEnemy = new TextureRegion[36];
-    TextureRegion[] imgShot = new TextureRegion[4];
+    TextureRegion[][] imgShot = new TextureRegion[3][3];
 
     SunButton btnBack;
     SunButton btnRestart;
 
     Space[] space = new Space[2];
     Ship ship;
+    Shot shot;
     List<Enemy> enemies = new ArrayList<>();
     List<Shot> shots = new ArrayList<>();
     private List<Integer> spawnedRanges = new ArrayList<>();
@@ -51,7 +53,7 @@ public class ScreenGame implements Screen {
     Sound sndExplosion;
 
     private long timeLastSpawnEnemy, timeSpawnEnemyInterval = 2500;
-    private long timeLastShoot, timeShootInterval = 500;
+    private long timeLastShoot, timeShootInterval = 650;
     private boolean gameOver;
     private boolean isBossAlive = false;
 
@@ -73,19 +75,22 @@ public class ScreenGame implements Screen {
 
         imgJoystick = new Texture("joystick.png");
         imgBackGround = new Texture("BackGroundPlay.png");
-        imgShipsAtlas = new Texture("PlayerMagAtlas.png");
+        imgPlayersAtlas = new Texture("PlayerMagAtlas.png");
+        imgEnemyAtlas = new Texture("EnemyPrizrak.png");
         imgShotsAtlas = new Texture("shots.png");
 
         sndBlaster = Gdx.audio.newSound(Gdx.files.internal("blaster.mp3"));
         sndExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.mp3"));
             for (int i = 0; i < imgShip.length; i++) {
-                imgShip[i] = new TextureRegion(imgShipsAtlas, (i < 6 ? i : 12 - i) * 32, 96, 32, 32);
+                imgShip[i] = new TextureRegion(imgPlayersAtlas, (i < 6 ? i : 12 - i) * 32, 96, 32, 32);
             }
             for (int i = 0; i < imgEnemy.length; i++) {
-                imgEnemy[i] = new TextureRegion(imgShipsAtlas, (i < 6 ? i : 12 - i) * 32, 96, 32, 32);
+                imgEnemy[i] = new TextureRegion(imgEnemyAtlas, 150, 70, 300, 300);
             }
-        for (int i = 0; i < imgShot.length; i++) {
-            imgShot[i] = new TextureRegion(imgShotsAtlas, i*250, 0, 250, 250);
+        for(int j = 0; j<imgShot.length; j++) {
+            for (int i = 0; i < imgShot.length; i++) {
+                imgShot[i][j] = new TextureRegion(imgShotsAtlas, i * 250, j * 250, 250, 250);
+            }
         }
 
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
@@ -105,6 +110,7 @@ public class ScreenGame implements Screen {
     {
         Gdx.input.setInputProcessor(new SunInputProcessor());
         gameStart();
+        main.player.score = 30;
     }
 
     @Override
@@ -211,8 +217,10 @@ public class ScreenGame implements Screen {
             batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width/2, e.height/2, e.width, e.height, flip, 1, 0);
             batch.setColor(1, 1, 1, 1);
         }
-        for(Shot s: shots){
-            batch.draw(imgShot[0], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);
+        for(Shot s: shots)
+        {
+            if(s.type == 0) batch.draw(imgShot[1][0], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);
+            if(s.type == 1) batch.draw(imgShot[0][2], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);
         }
         int flip = ship.vx>0?1:-1;
         batch.draw(imgShip[ship.phase], ship.scrX(), ship.scrY(), ship.width/2, ship.height/2, ship.width, ship.height, flip, 1, 0);
@@ -258,7 +266,7 @@ public class ScreenGame implements Screen {
     @Override
     public void dispose() {
         imgBackGround.dispose();
-        imgShipsAtlas.dispose();
+        imgPlayersAtlas.dispose();
         imgJoystick.dispose();
         imgShotsAtlas.dispose();
         sndExplosion.dispose();
@@ -310,7 +318,7 @@ public class ScreenGame implements Screen {
                 {
                     float centerX = enemy.x - 40; // Центр по X
                     float centerY = enemy.y - 50; // Центр по Y
-                    float speed = 7f; // Скорость снарядов
+                    float speed = 5f; // Скорость снарядов
 
                     // 8 направлений
                     for (int i = 0; i < 8; i++) {
@@ -343,6 +351,13 @@ public class ScreenGame implements Screen {
         if(isSoundOn) sndExplosion.play();
         ship.x = -10000;
         gameOver = true;
+        for (int i = enemies.size()-1; i >= 0; i--) {
+            if (enemies.get(i).type == 3) {
+                enemies.remove(i);
+                isBossAlive = false;
+                break;
+            }
+        }
         players[players.length-1].clone(main.player);
         sortTableOfRecords();
         saveTableOfRecords();

@@ -36,21 +36,21 @@ public class Enemy extends SpaceObject {
                     price = 2;
                     speed = 4;
                     width = height = 100;
-                    color = Color.RED;
+                    color = Color.YELLOW;
                     break;
                 case 1:
                     hp = 3;
                     price = 3;
                     speed = 2.5f;
                     width = height = 150;
-                    color = Color.RED;
+                    color = Color.PINK;
                     break;
                 case 2:
                     hp = 5;
                     price = 5;
                     speed = 1.5f;
                     width = height = 200;
-                    color = Color.RED;
+                    color = Color.ORANGE;
                     break;
                 case 3:
                     hp = 10;

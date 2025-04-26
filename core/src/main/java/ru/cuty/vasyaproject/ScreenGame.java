@@ -111,7 +111,6 @@ public class ScreenGame implements Screen {
     {
         Gdx.input.setInputProcessor(new SunInputProcessor());
         gameStart();
-        main.player.score = 30;
     }
 
     @Override
@@ -321,10 +320,10 @@ public class ScreenGame implements Screen {
             // Снаряды босса (8 направлений)
             for (Enemy enemy : enemies) {
                 if (enemy.type == 3) {
-                    float spawnOffsetX = enemy.vx > 0 ? -30 : 30;
+                    float spawnOffsetX = enemy.vx > 0 ? -45 : 45;
                     float centerX = enemy.x - spawnOffsetX; // Центр по X
-                    float centerY = enemy.y + 5; // Центр по Y
-                    float speed = 4f; // Скорость снарядов
+                    float centerY = enemy.y; // Центр по Y
+                    float speed = 5f; // Скорость снарядов
 
                     // 8 направлений
                     for (int i = 0; i < 8; i++) {

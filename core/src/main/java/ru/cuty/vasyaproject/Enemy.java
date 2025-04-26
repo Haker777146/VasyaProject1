@@ -70,21 +70,21 @@ public class Enemy extends SpaceObject {
                     price = 3;
                     speed = 5;
                     width = height = 90;
-                    color = Color.RED;
+                    color = Color.YELLOW;
                     break;
                 case 1:
                     hp = 4;
                     price = 3;
                     speed = 4;
                     width = height = 150;
-                    color = Color.RED;
+                    color = Color.ORANGE;
                     break;
                 case 2:
                     hp = 6;
                     price = 5;
                     speed = 2.5f;
                     width = height = 210;
-                    color = Color.RED;
+                    color = Color.PINK;
                     break;
                 case 3:
                     hp = 13;
@@ -104,21 +104,21 @@ public class Enemy extends SpaceObject {
                     price = 2;
                     speed = 6;
                     width = height = 80;
-                    color = Color.RED;
+                    color = Color.YELLOW;
                     break;
                 case 1:
                     hp = 5;
                     price = 2;
                     speed = 5;
                     width = height = 150;
-                    color = Color.RED;
+                    color = Color.ORANGE;
                     break;
                 case 2:
                     hp = 7;
                     price = 4;
                     speed = 4;
                     width = height = 220;
-                    color = Color.RED;
+                    color = Color.PINK;
                     break;
                 case 3:
                     hp = 17;

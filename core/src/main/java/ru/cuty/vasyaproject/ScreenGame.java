@@ -316,8 +316,9 @@ public class ScreenGame implements Screen {
             for (Enemy enemy : enemies) {
                 if (enemy.type == 3)
                 {
-                    float centerX = enemy.x - 40; // Центр по X
-                    float centerY = enemy.y - 50; // Центр по Y
+                    float spawnOffsetX = enemy.vx > 0 ? -30 : 30;
+                    float centerX = enemy.x - spawnOffsetX; // Центр по X
+                    float centerY = enemy.y + 5; // Центр по Y
                     float speed = 5f; // Скорость снарядов
 
                     // 8 направлений

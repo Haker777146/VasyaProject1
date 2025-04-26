@@ -53,7 +53,7 @@ public class ScreenGame implements Screen {
     Sound sndExplosion;
 
     private long timeLastSpawnEnemy, timeSpawnEnemyInterval = 2500;
-    private long timeLastShoot, timeShootInterval = 500;
+    private long timeLastShoot, timeShootInterval = 400;
     private long timeLastShootBoss, timeShootIntervalBoss = 1000;
     private boolean gameOver;
     private boolean isBossAlive = false;

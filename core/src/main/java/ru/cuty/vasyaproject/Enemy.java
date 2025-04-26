@@ -151,12 +151,12 @@ public class Enemy extends SpaceObject {
         }
     }
 
-    public void move(Ship ship)
+    public void move(PlayerMag mag)
     {
         super.move();
         changePhase();
 
-        Vector2 direction = new Vector2(ship.x - x, ship.y - y);
+        Vector2 direction = new Vector2(mag.x - x, mag.y - y);
 
         vx = speed * MathUtils.cosDeg(direction.angle());
         vy = speed * MathUtils.sinDeg(direction.angle());

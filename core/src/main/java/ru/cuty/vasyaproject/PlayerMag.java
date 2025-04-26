@@ -2,20 +2,19 @@ package ru.cuty.vasyaproject;
 
 import static ru.cuty.vasyaproject.Main.*;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 
-public class Ship extends SpaceObject{
+public class PlayerMag extends SpaceObject{
     public int phase, nPhases = 12;
     private long timeLastPhase, timePhaseInterval = 50;
 
-    public Ship(float x, float y, float vx, float vy) {
+    public PlayerMag(float x, float y, float vx, float vy) {
         super(x, y, vx, vy);
         width = 150;
         height = 150;
     }
-    public Ship(Main main)
+    public PlayerMag(Main main)
     {
 
     }

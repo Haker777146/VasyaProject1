@@ -6,6 +6,11 @@ public class SpaceObject {
     public float vx, vy;
     public int type;
 
+    private float hitboxWidthFactor = 3.2f;    // Ширина зоны столкновения
+    private float hitboxTopFactor = 2f;       // Верхняя часть (уже)
+    private float hitboxBottomFactor = 2.8f;  // Нижняя часть (шире)
+    private float hitboxOffsetY = 0f;
+
     public SpaceObject(float x, float y, float vx, float vy) {
         this.x = x;
         this.y = y;
@@ -29,8 +34,24 @@ public class SpaceObject {
         return y-height/2;
     }
 
-    public boolean overlap(SpaceObject o)
-    {
-        return Math.abs(x - o.x) < width/3 + o.width/3 && Math.abs(y - o.y) < height/2.5f + o.height/2.5f;
+    public boolean overlap(SpaceObject o) {
+        // Ширина зоны столкновения
+        float thisWidth = width / hitboxWidthFactor;
+        float otherWidth = o.width / o.hitboxWidthFactor;
+
+        // Высота зоны столкновения (разная для верха и низа)
+        float thisHeight, otherHeight;
+
+        if (o.y > y + hitboxOffsetY) { // Если объект выше текущего
+            thisHeight = height / hitboxTopFactor;
+            otherHeight = o.height / o.hitboxTopFactor;
+        } else { // Если объект ниже или на уровне
+            thisHeight = height / hitboxBottomFactor;
+            otherHeight = o.height / o.hitboxBottomFactor;
+        }
+
+        // Проверка столкновения
+        return Math.abs(x - o.x) < thisWidth + otherWidth &&
+            Math.abs(y - o.y - hitboxOffsetY) < thisHeight + otherHeight;
     }
 }

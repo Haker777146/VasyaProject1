@@ -10,7 +10,7 @@ public class Shot extends SpaceObject{
     {
         super(x, y, vx, vy);
         this.type = type;
-        vRotation = -10;
+        vRotation = -15;
         switch (type)
         {
             case 0:

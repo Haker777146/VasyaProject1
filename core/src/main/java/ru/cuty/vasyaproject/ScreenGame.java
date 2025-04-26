@@ -34,7 +34,7 @@ public class ScreenGame implements Screen {
     Texture imgPlayersAtlas;
     Texture imgEnemyAtlas;
     Texture imgShotsAtlas;
-    TextureRegion[] imgShip = new TextureRegion[12];
+    TextureRegion[] imgPlayerMag = new TextureRegion[12];
     TextureRegion[] imgEnemy = new TextureRegion[36];
     TextureRegion[][] imgShot = new TextureRegion[3][3];
 
@@ -42,7 +42,7 @@ public class ScreenGame implements Screen {
     SunButton btnRestart;
 
     Space[] space = new Space[2];
-    Ship ship;
+    PlayerMag mag;
     Shot shot;
     List<Enemy> enemies = new ArrayList<>();
     List<Shot> shots = new ArrayList<>();
@@ -53,7 +53,8 @@ public class ScreenGame implements Screen {
     Sound sndExplosion;
 
     private long timeLastSpawnEnemy, timeSpawnEnemyInterval = 2500;
-    private long timeLastShoot, timeShootInterval = 650;
+    private long timeLastShoot, timeShootInterval = 500;
+    private long timeLastShootBoss, timeShootIntervalBoss = 1000;
     private boolean gameOver;
     private boolean isBossAlive = false;
 
@@ -81,11 +82,11 @@ public class ScreenGame implements Screen {
 
         sndBlaster = Gdx.audio.newSound(Gdx.files.internal("blaster.mp3"));
         sndExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.mp3"));
-            for (int i = 0; i < imgShip.length; i++) {
-                imgShip[i] = new TextureRegion(imgPlayersAtlas, (i < 6 ? i : 12 - i) * 32, 96, 32, 32);
+            for (int i = 0; i < imgPlayerMag.length; i++) {
+                imgPlayerMag[i] = new TextureRegion(imgPlayersAtlas, (i < 6 ? i : 12 - i) * 32, 96, 32, 32);
             }
             for (int i = 0; i < imgEnemy.length; i++) {
-                imgEnemy[i] = new TextureRegion(imgEnemyAtlas, 150, 70, 300, 300);
+                imgEnemy[i] = new TextureRegion(imgEnemyAtlas, 145, 75, 280, 260);
             }
         for(int j = 0; j<imgShot.length; j++) {
             for (int i = 0; i < imgShot.length; i++) {
@@ -145,19 +146,19 @@ public class ScreenGame implements Screen {
             }
         }
         if(controls == ACCELEROMETER){
-            ship.vx = -Gdx.input.getAccelerometerX()*2;
-            ship.vy = -Gdx.input.getAccelerometerY()*2;
+            mag.vx = -Gdx.input.getAccelerometerX()*2;
+            mag.vy = -Gdx.input.getAccelerometerY()*2;
         }
 
         // события
-        for(Enemy e: enemies) e.move(ship);
+        for(Enemy e: enemies) e.move(mag);
         for(Shot s: shots) s.move();
 
         //for(Space s: space) s.move();
         spawnEnemy();
         for (Enemy enemy : enemies)
         {
-            if (enemy.overlap(ship))
+            if (enemy.overlap(mag))
             {
                 enemies.clear();
                 shots.clear();
@@ -170,7 +171,7 @@ public class ScreenGame implements Screen {
         }
         if(!gameOver)
         {
-            ship.move();
+            mag.move();
             spawnShots();
         }
         for(int i=shots.size()-1; i>=0; i--)
@@ -194,7 +195,7 @@ public class ScreenGame implements Screen {
                     }
                     break;
                 }
-                if(shots.get(i).type == 1 && shots.get(i).overlap(ship))
+                if(shots.get(i).type == 1 && shots.get(i).overlap(mag))
                 {
                     if (isSoundOn) sndExplosion.play();
                     shots.remove(i);
@@ -212,7 +213,7 @@ public class ScreenGame implements Screen {
             batch.draw(imgJoystick, main.joystick.scrX(), main.joystick.scrY(), main.joystick.width, main.joystick.height);
         }
         for(Enemy e: enemies){
-            int flip = e.x>ship.x?-1:1;
+            int flip = e.x> mag.x?-1:1;
             batch.setColor(e.getColor());
             batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width/2, e.height/2, e.width, e.height, flip, 1, 0);
             batch.setColor(1, 1, 1, 1);
@@ -222,8 +223,8 @@ public class ScreenGame implements Screen {
             if(s.type == 0) batch.draw(imgShot[1][0], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);
             if(s.type == 1) batch.draw(imgShot[0][2], s.scrX(), s.scrY(), s.width/2, s.height/2, s.width, s.height, 1, 1, s.rotation);
         }
-        int flip = ship.vx>0?1:-1;
-        batch.draw(imgShip[ship.phase], ship.scrX(), ship.scrY(), ship.width/2, ship.height/2, ship.width, ship.height, flip, 1, 0);
+        int flip = mag.vx>0?1:-1;
+        batch.draw(imgPlayerMag[mag.phase], mag.scrX(), mag.scrY(), mag.width/2, mag.height/2, mag.width, mag.height, flip, 1, 0);
         btnBack.font.draw(batch, btnBack.text, btnBack.x, btnBack.y);
         vasyaRed50.draw(batch, "score:"+main.player.score, 10, 885);
         if(gameOver)
@@ -304,22 +305,26 @@ public class ScreenGame implements Screen {
         }
     }
     private void spawnShots() {
-        if (TimeUtils.millis() > timeLastShoot + timeShootInterval) {
+        if (TimeUtils.millis() > timeLastShoot + timeShootInterval)
+        {
             // Снаряды игрока
-            if (ship.vx != 0) {
+            if (mag.vx != 0) {
                 if (isSoundOn) sndBlaster.play();
-                float offsetX = ship.vx > 0 ? 45 : -60;
-                shots.add(new Shot(ship.x + offsetX, ship.y - 30, ship.vx > 0 ? 10 : -10, 0, 0));
+                float offsetX = mag.vx > 0 ? 45 : -60;
+                shots.add(new Shot(mag.x + offsetX, mag.y - 30, mag.vx > 0 ? 10 : -10, 0, 0));
             }
+            timeLastShoot = TimeUtils.millis();
+        }
 
+        if (TimeUtils.millis() > timeLastShootBoss + timeShootIntervalBoss)
+        {
             // Снаряды босса (8 направлений)
             for (Enemy enemy : enemies) {
-                if (enemy.type == 3)
-                {
+                if (enemy.type == 3) {
                     float spawnOffsetX = enemy.vx > 0 ? -30 : 30;
                     float centerX = enemy.x - spawnOffsetX; // Центр по X
                     float centerY = enemy.y + 5; // Центр по Y
-                    float speed = 5f; // Скорость снарядов
+                    float speed = 4f; // Скорость снарядов
 
                     // 8 направлений
                     for (int i = 0; i < 8; i++) {
@@ -332,13 +337,13 @@ public class ScreenGame implements Screen {
                     break; // Обрабатываем только первого найденного босса
                 }
             }
-            timeLastShoot = TimeUtils.millis();
+            timeLastShootBoss = TimeUtils.millis();
         }
     }
 
     private void gameStart(){
         gameOver = false;
-        ship = new Ship(SCR_WIDTH/2, 200, 0, 0);
+        mag = new PlayerMag(SCR_WIDTH/2, 200, 0, 0);
         enemies.clear();
         shots.clear();
         spawnedRanges.clear();
@@ -350,7 +355,7 @@ public class ScreenGame implements Screen {
     private void gameOver()
     {
         if(isSoundOn) sndExplosion.play();
-        ship.x = -10000;
+        mag.x = -10000;
         gameOver = true;
         for (int i = enemies.size()-1; i >= 0; i--) {
             if (enemies.get(i).type == 3) {
@@ -422,11 +427,11 @@ public class ScreenGame implements Screen {
             touch.set(screenX, screenY, 0);
             camera.unproject(touch);
             if(controls == SCREEN) {
-                ship.touchScreen(touch);
+                mag.touchScreen(touch);
             }
             if(controls == JOYSTICK) {
                 if(main.joystick.isTouchInside(touch)){
-                    ship.touchJoystick(touch, main.joystick);
+                    mag.touchJoystick(touch, main.joystick);
                 }
             }
             return false;
@@ -447,11 +452,11 @@ public class ScreenGame implements Screen {
             touch.set(screenX, screenY, 0);
             camera.unproject(touch);
             if(controls == SCREEN) {
-                ship.touchScreen(touch);
+                mag.touchScreen(touch);
             }
             if(controls == JOYSTICK) {
                 if(main.joystick.isTouchInside(touch)){
-                    ship.touchJoystick(touch, main.joystick);
+                    mag.touchJoystick(touch, main.joystick);
                 }
             }
             return false;

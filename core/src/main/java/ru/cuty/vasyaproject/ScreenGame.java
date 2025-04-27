@@ -41,7 +41,7 @@ public class ScreenGame implements Screen {
     SunButton btnBack;
     SunButton btnRestart;
 
-    Space[] space = new Space[2];
+    Space[] space = new Space[1];
     PlayerMag mag;
     Shot shot;
     List<Enemy> enemies = new ArrayList<>();
@@ -98,7 +98,6 @@ public class ScreenGame implements Screen {
         btnRestart = new SunButton("restart", vasyaRed, 640, 160);
 
         space[0] = new Space(0, 0, 0, -3);
-        space[1] = new Space(0, SCR_HEIGHT, 0, -3);
         for (int i = 0; i < players.length; i++)
         {
             players[i] = new Player();

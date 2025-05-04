@@ -171,7 +171,8 @@ public class Enemy extends SpaceObject {
         }
     }
 
-    public void takeDamage() {
+    public void takeDamage()
+    {
         this.alpha = 0.1f + 0.9f * ((float)this.hp / initialHp);
     }
 

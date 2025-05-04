@@ -18,7 +18,7 @@ public class ScreenSettings implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Vector3 touch;
-    private BitmapFont vasyaFont, vasyaRed, vasyaWhite, vasyaOrange, vasyaRed50, vasyaRed70;
+    private BitmapFont vasyaFont, vasyaRed, vasyaWhite, vasyaRed70;
     private Main main;
     private InputKeyboard keyboard;
 
@@ -39,9 +39,7 @@ public class ScreenSettings implements Screen {
     SunButton btnHard;
     SunButton btnExtreme;
 
-    private float lastTiltX = 0;
-    private float lastTiltY = 0;
-    PlayerMag player;
+
 
     private Music sndMenuMusic, sndPlayScreenMusic;
 
@@ -54,8 +52,6 @@ public class ScreenSettings implements Screen {
         vasyaFont = main.vasyaFont;
         vasyaWhite = main.vasyaWhite;
         vasyaRed = main.vasyaRed;
-        vasyaOrange = main.vasyaOrange;
-        vasyaRed50 = main.vasyaRed50;
         vasyaRed70 = main.vasyaRed70;
 
         sndMenuMusic = main.sndMenuMusic;

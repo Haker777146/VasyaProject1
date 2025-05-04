@@ -2,16 +2,8 @@ package ru.cuty.vasyaproject;
 
 import static ru.cuty.vasyaproject.Main.*;
 
-import static ru.cuty.vasyaproject.Main.ACCELEROMETER;
-import static ru.cuty.vasyaproject.Main.JOYSTICK;
-import static ru.cuty.vasyaproject.Main.SCREEN;
-import static ru.cuty.vasyaproject.Main.SCR_HEIGHT;
-import static ru.cuty.vasyaproject.Main.SCR_WIDTH;
-import static ru.cuty.vasyaproject.Main.controls;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -46,6 +38,10 @@ public class ScreenSettings implements Screen {
     SunButton btnNormal;
     SunButton btnHard;
     SunButton btnExtreme;
+
+    private float lastTiltX = 0;
+    private float lastTiltY = 0;
+    PlayerMag player;
 
     private Music sndMenuMusic, sndPlayScreenMusic;
 

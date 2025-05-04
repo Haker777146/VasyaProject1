@@ -172,7 +172,7 @@ public class Enemy extends SpaceObject {
     }
 
     public void takeDamage() {
-        if (initialHp > 0) this.alpha = 0.25f + 0.75f * ((float)this.hp / initialHp);
+        this.alpha = 0.1f + 0.9f * ((float)this.hp / initialHp);
     }
 
     public boolean outOfScreen() {

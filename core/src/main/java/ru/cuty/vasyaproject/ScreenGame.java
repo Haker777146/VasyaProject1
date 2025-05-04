@@ -25,7 +25,7 @@ public class ScreenGame implements Screen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Vector3 touch;
-    private BitmapFont vasyaRed, vasyaOrange, vasyaFont, vasyaWhite, vasyaRed50, vasyaRed70;
+    private BitmapFont vasyaRed, vasyaOrange,vasyaRed50;
     private Main main;
     private Music sndMenuMusic, sndPlayScreenMusic;
 
@@ -43,7 +43,6 @@ public class ScreenGame implements Screen {
 
     Space[] space = new Space[1];
     PlayerMag mag;
-    Shot shot;
     List<Enemy> enemies = new ArrayList<>();
     List<Shot> shots = new ArrayList<>();
     private List<Integer> spawnedRanges = new ArrayList<>();
@@ -66,10 +65,7 @@ public class ScreenGame implements Screen {
 
         vasyaRed = main.vasyaRed;
         vasyaOrange = main.vasyaOrange;
-        vasyaFont = main.vasyaFont;
-        vasyaWhite = main.vasyaWhite;
         vasyaRed50 = main.vasyaRed50;
-        vasyaRed70 = main.vasyaRed70;
 
         sndMenuMusic = main.sndMenuMusic;
         sndPlayScreenMusic = main.sndPlayScreenMusic;
@@ -185,6 +181,7 @@ public class ScreenGame implements Screen {
                 {
                     if(isSoundOn) sndExplosion.play();
                     shots.remove(i);
+                    enemies.get(j).takeDamage();
                     if(--enemies.get(j).hp == 0)
                     {
                         main.player.kills++;
@@ -202,7 +199,6 @@ public class ScreenGame implements Screen {
                 }
             }
         }
-
         // отрисовка
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -212,9 +208,9 @@ public class ScreenGame implements Screen {
         }
         for(Enemy e: enemies){
             int flip = e.x> mag.x?-1:1;
-            batch.setColor(e.getColor());
+            batch.setColor(e.getColor().r, e.getColor().g, e.getColor().b, e.alpha);
             batch.draw(imgEnemy[e.phase], e.scrX(), e.scrY(), e.width/2, e.height/2, e.width, e.height, flip, 1, 0);
-            batch.setColor(1, 1, 1, 1);
+            batch.setColor(1, 1, 1, 1); // сбрасывание цвета
         }
         for(Shot s: shots)
         {

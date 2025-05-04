@@ -326,7 +326,7 @@ public class ScreenGame implements Screen {
         // Снаряды игрока(Extreme)
         if (difficulty_game == Extreme) timeShootInterval = 350;
 
-        // Снаряды боса(Normal, Hard, Extreme)
+        // Снаряды босса(Normal, Hard, Extreme)
         if ((TimeUtils.millis() > timeLastShootBoss + timeShootIntervalBoss) && (difficulty_game == Normal ||
         difficulty_game == Hard || difficulty_game == Extreme))
         {

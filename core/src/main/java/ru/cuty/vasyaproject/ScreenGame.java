@@ -53,8 +53,8 @@ public class ScreenGame implements Screen {
     Sound sndExplosion;
 
     private long timeLastSpawnEnemy, timeSpawnEnemyInterval = 2500;
-    private long timeLastShoot, timeShootInterval = 500;
-    private long timeLastShootBoss, timeShootIntervalBoss = 1000;
+    private long timeLastShoot, timeShootInterval;
+    private long timeLastShootBoss, timeShootIntervalBoss;
     private boolean gameOver;
     private boolean isBossAlive = false;
 
@@ -268,6 +268,7 @@ public class ScreenGame implements Screen {
         imgPlayersAtlas.dispose();
         imgJoystick.dispose();
         imgShotsAtlas.dispose();
+        imgEnemyAtlas.dispose();
         sndExplosion.dispose();
         sndBlaster.dispose();
     }
@@ -304,8 +305,9 @@ public class ScreenGame implements Screen {
     }
     private void spawnShots()
     {
-        // Снаряды игрока(Normal)
-        if (TimeUtils.millis() > timeLastShoot + timeShootInterval && difficulty_game == Normal)
+        // Снаряды игрока(Normal, Hard, Extreme)
+        if ((TimeUtils.millis() > timeLastShoot + timeShootInterval) && (difficulty_game == Normal ||
+        difficulty_game == Hard || difficulty_game == Extreme))
         {
             if (mag.vx != 0) {
                 if (isSoundOn) sndBlaster.play();
@@ -314,34 +316,23 @@ public class ScreenGame implements Screen {
             }
             timeLastShoot = TimeUtils.millis();
         }
+
+        // Снаряды игрока(Normal)
+        if (difficulty_game == Normal) timeShootInterval = 500;
 
         // Снаряды игрока(Hard)
-        if (TimeUtils.millis() > timeLastShoot-50 + timeShootInterval-50 && difficulty_game == Hard)
-        {
-            if (mag.vx != 0) {
-                if (isSoundOn) sndBlaster.play();
-                float offsetX = mag.vx > 0 ? 45 : -60;
-                shots.add(new Shot(mag.x + offsetX, mag.y - 30, mag.vx > 0 ? 10 : -10, 0, 0));
-            }
-            timeLastShoot = TimeUtils.millis();
-        }
+        if (difficulty_game == Hard) timeShootInterval = 400;
 
         // Снаряды игрока(Extreme)
-        if (TimeUtils.millis() > timeLastShoot-100 + timeShootInterval-100 && difficulty_game == Extreme)
-        {
-            if (mag.vx != 0) {
-                if (isSoundOn) sndBlaster.play();
-                float offsetX = mag.vx > 0 ? 45 : -60;
-                shots.add(new Shot(mag.x + offsetX, mag.y - 30, mag.vx > 0 ? 10 : -10, 0, 0));
-            }
-            timeLastShoot = TimeUtils.millis();
-        }
+        if (difficulty_game == Extreme) timeShootInterval = 350;
 
-        // Снаряды боса(Normal)
-        if (TimeUtils.millis() > timeLastShootBoss + timeShootIntervalBoss && difficulty_game == Normal)
+        // Снаряды боса(Normal, Hard, Extreme)
+        if ((TimeUtils.millis() > timeLastShootBoss + timeShootIntervalBoss) && (difficulty_game == Normal ||
+        difficulty_game == Hard || difficulty_game == Extreme))
         {
             // Снаряды босса (8 направлений)
-            for (Enemy enemy : enemies) {
+            for (Enemy enemy : enemies)
+            {
                 if (enemy.type == 3) {
                     float spawnOffsetX = enemy.vx > 0 ? -45 : 45;
                     float centerX = enemy.x - spawnOffsetX; // Центр по X
@@ -362,55 +353,14 @@ public class ScreenGame implements Screen {
             timeLastShootBoss = TimeUtils.millis();
         }
 
-        // Снаряды боса(Hard)
-        if (TimeUtils.millis() > timeLastShootBoss-50 + timeShootIntervalBoss-50 && difficulty_game == Hard)
-        {
-            // Снаряды босса (8 направлений)
-            for (Enemy enemy : enemies) {
-                if (enemy.type == 3) {
-                    float spawnOffsetX = enemy.vx > 0 ? -45 : 45;
-                    float centerX = enemy.x - spawnOffsetX; // Центр по X
-                    float centerY = enemy.y; // Центр по Y
-                    float speed = 5f; // Скорость снарядов
+        // Снаряды босса(Normal)
+        if (difficulty_game == Normal) timeShootIntervalBoss = 1000;
 
-                    // 8 направлений
-                    for (int i = 0; i < 8; i++) {
-                        float angle = i * 45f; // Угол в градусах
-                        float vx = speed * MathUtils.cosDeg(angle);
-                        float vy = speed * MathUtils.sinDeg(angle);
-                        shots.add(new Shot(centerX, centerY, vx, vy, 1));
-                    }
-                    if (isSoundOn) sndBlaster.play();
-                    break; // Обрабатываем только первого найденного босса
-                }
-            }
-            timeLastShootBoss = TimeUtils.millis();
-        }
+        // Снаряды босса(Hard)
+        if (difficulty_game == Hard) timeShootIntervalBoss = 950;
 
-        // Снаряды боса(Extreme)
-        if (TimeUtils.millis() > timeLastShootBoss-100 + timeShootIntervalBoss-100 && difficulty_game == Extreme)
-        {
-            // Снаряды босса (8 направлений)
-            for (Enemy enemy : enemies) {
-                if (enemy.type == 3) {
-                    float spawnOffsetX = enemy.vx > 0 ? -45 : 45;
-                    float centerX = enemy.x - spawnOffsetX; // Центр по X
-                    float centerY = enemy.y; // Центр по Y
-                    float speed = 5f; // Скорость снарядов
-
-                    // 8 направлений
-                    for (int i = 0; i < 8; i++) {
-                        float angle = i * 45f; // Угол в градусах
-                        float vx = speed * MathUtils.cosDeg(angle);
-                        float vy = speed * MathUtils.sinDeg(angle);
-                        shots.add(new Shot(centerX, centerY, vx, vy, 1));
-                    }
-                    if (isSoundOn) sndBlaster.play();
-                    break; // Обрабатываем только первого найденного босса
-                }
-            }
-            timeLastShootBoss = TimeUtils.millis();
-        }
+        // Снаряды босса(Extreme)
+        if (difficulty_game == Extreme) timeShootIntervalBoss = 900;
     }
 
 

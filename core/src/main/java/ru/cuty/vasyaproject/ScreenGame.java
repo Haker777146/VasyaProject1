@@ -181,8 +181,9 @@ public class ScreenGame implements Screen {
                 {
                     if(isSoundOn) sndExplosion.play();
                     shots.remove(i);
+                    --enemies.get(j).hp;
                     enemies.get(j).takeDamage();
-                    if(--enemies.get(j).hp == 0)
+                    if(enemies.get(j).hp == 0)
                     {
                         main.player.kills++;
                         main.player.score+=enemies.get(j).price;

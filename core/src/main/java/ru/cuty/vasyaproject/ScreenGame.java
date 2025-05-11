@@ -151,7 +151,7 @@ public class ScreenGame implements Screen {
         for(Enemy e: enemies) e.move(mag);
         for(Shot s: shots) s.move();
 
-        //spawnEnemy();
+        spawnEnemy();
         for (Enemy enemy : enemies)
         {
             if (enemy.overlap(mag))

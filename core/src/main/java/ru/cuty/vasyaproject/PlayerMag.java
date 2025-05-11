@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class PlayerMag extends SpaceObject{
     public int phase, nPhases = 12;
     private long timeLastPhase, timePhaseInterval = 50;
-    public float maxSpeed, accelerationFactor;
+    public float maxSpeed, accelerationFactor, deadZoneThreshold = 0.2f;
 
     public PlayerMag(float x, float y, float vx, float vy) {
         super(x, y, vx, vy);
@@ -65,6 +65,13 @@ public class PlayerMag extends SpaceObject{
     }
     public void accelerate(float accelX, float accelY)
     {
+        if (Math.abs(accelX) < deadZoneThreshold) {
+            accelX = 0.0f;
+        }
+        if (Math.abs(accelY) < deadZoneThreshold) {
+            accelY = 0.0f;
+        }
+
         if (difficulty_game == Normal) {
             accelerationFactor = 1f;
             maxSpeed = 5.0f;
@@ -77,6 +84,7 @@ public class PlayerMag extends SpaceObject{
             accelerationFactor = 3f;
             maxSpeed = 10f;
         }
+
         vy -= accelY * accelerationFactor;
         vx -= accelX * accelerationFactor;
 

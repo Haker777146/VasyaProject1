@@ -3,6 +3,7 @@ package ru.cuty.vasyaproject;
 import static ru.cuty.vasyaproject.Main.*;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
@@ -111,6 +112,12 @@ public class ScreenGame implements Screen {
     @Override
     public void render(float delta)
     {
+        if (Main.controls == Main.ACCELEROMETER) {
+            float accelX = -Gdx.input.getAccelerometerY();
+            float accelY = Gdx.input.getAccelerometerX();
+
+            mag.accelerate(accelX, accelY);
+        }
         // Проверяем, жив ли босс
         isBossAlive = false;
         for (Enemy enemy : enemies)
@@ -139,16 +146,11 @@ public class ScreenGame implements Screen {
                 gameStart();
             }
         }
-        if(controls == ACCELEROMETER){
-            mag.vx = -Gdx.input.getAccelerometerX()*2;
-            mag.vy = -Gdx.input.getAccelerometerY()*2;
-        }
 
         // события
         for(Enemy e: enemies) e.move(mag);
         for(Shot s: shots) s.move();
 
-        //for(Space s: space) s.move();
         spawnEnemy();
         for (Enemy enemy : enemies)
         {

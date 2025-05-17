@@ -30,7 +30,7 @@ public class ScreenGame implements Screen {
     private Main main;
     private Music sndMenuMusic, sndPlayScreenMusic;
 
-    Texture imgJoystick;
+    Texture imgJoystick, imgJoystickCentre;
     Texture imgBackGround;
     Texture imgPlayersAtlas;
     Texture imgEnemyAtlas;
@@ -57,6 +57,8 @@ public class ScreenGame implements Screen {
     private long timeLastShootBoss, timeShootIntervalBoss;
     private boolean gameOver;
     private boolean isBossAlive = false;
+    private boolean isJoystickTouched = false;
+    private Vector3 joystickTouchPos = new Vector3();
 
     public ScreenGame(Main main) {
         this.main = main;
@@ -71,14 +73,16 @@ public class ScreenGame implements Screen {
         sndMenuMusic = main.sndMenuMusic;
         sndPlayScreenMusic = main.sndPlayScreenMusic;
 
-        imgJoystick = new Texture("joystick.png");
-        imgBackGround = new Texture("BackGroundPlay.png");
-        imgPlayersAtlas = new Texture("PlayerMagAtlas.png");
-        imgEnemyAtlas = new Texture("EnemyPrizrak.png");
-        imgShotsAtlas = new Texture("shots.png");
+        imgJoystick = new Texture("Img/joystick.png");
+        imgJoystickCentre = new Texture("Img/CentreJostick.png");
 
-        sndBlaster = Gdx.audio.newSound(Gdx.files.internal("blaster.mp3"));
-        sndExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.mp3"));
+        imgBackGround = new Texture("Img/BackGroundPlay.png");
+        imgPlayersAtlas = new Texture("Img/PlayerMagAtlas.png");
+        imgEnemyAtlas = new Texture("Img/EnemyPrizrak.png");
+        imgShotsAtlas = new Texture("Img/shots.png");
+
+        sndBlaster = Gdx.audio.newSound(Gdx.files.internal("Sounds/blaster.mp3"));
+        sndExplosion = Gdx.audio.newSound(Gdx.files.internal("Sounds/explosion.mp3"));
             for (int i = 0; i < imgPlayerMag.length; i++) {
                 imgPlayerMag[i] = new TextureRegion(imgPlayersAtlas, (i < 6 ? i : 12 - i) * 32, 96, 32, 32);
             }
@@ -205,9 +209,36 @@ public class ScreenGame implements Screen {
         // отрисовка
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+
         for(Space s: space) batch.draw(imgBackGround, s.x, s.y, s.width, s.height);
-        if(controls == JOYSTICK){
-            batch.draw(imgJoystick, main.joystick.scrX(), main.joystick.scrY(), main.joystick.width, main.joystick.height);
+        if(controls == JOYSTICK) {
+
+            batch.draw(imgJoystick, main.joystick.scrX(), main.joystick.scrY(),
+                main.joystick.width, main.joystick.height);
+
+            float centerX, centerY;
+            float widthCentre = main.joystick.width/1.3f, heightCentre = main.joystick.height/1.3f;
+            if(isJoystickTouched) {
+
+                float dx = joystickTouchPos.x - main.joystick.x;
+                float dy = joystickTouchPos.y - main.joystick.y;
+
+                float maxDistance = (main.joystick.width - widthCentre)*1.9f;
+                float distance = (float)Math.sqrt(dx*dx + dy*dy);
+
+                if(distance > maxDistance) {
+                    dx = dx * maxDistance / distance;
+                    dy = dy * maxDistance / distance;
+                }
+
+                centerX = main.joystick.x + dx - widthCentre/2;
+                centerY = main.joystick.y + dy - heightCentre/2;
+            } else {
+
+                centerX = main.joystick.x - widthCentre/2;
+                centerY = main.joystick.y - heightCentre/2;
+            }
+            batch.draw(imgJoystickCentre, centerX, centerY, widthCentre, heightCentre);
         }
         for(Enemy e: enemies){
             int flip = e.x> mag.x?-1:1;
@@ -270,6 +301,7 @@ public class ScreenGame implements Screen {
         imgEnemyAtlas.dispose();
         sndExplosion.dispose();
         sndBlaster.dispose();
+        imgJoystickCentre.dispose();
     }
 
     private void spawnEnemy()
@@ -453,6 +485,8 @@ public class ScreenGame implements Screen {
             }
             if(controls == JOYSTICK) {
                 if(main.joystick.isTouchInside(touch)){
+                    isJoystickTouched = true;
+                    joystickTouchPos.set(touch);
                     mag.touchJoystick(touch, main.joystick);
                 }
             }
@@ -460,7 +494,9 @@ public class ScreenGame implements Screen {
         }
 
         @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        public boolean touchUp(int screenX, int screenY, int pointer, int button)
+        {
+            isJoystickTouched = false;
             return false;
         }
 
@@ -476,10 +512,9 @@ public class ScreenGame implements Screen {
             if(controls == SCREEN) {
                 mag.touchScreen(touch);
             }
-            if(controls == JOYSTICK) {
-                if(main.joystick.isTouchInside(touch)){
-                    mag.touchJoystick(touch, main.joystick);
-                }
+            if(controls == JOYSTICK && isJoystickTouched){
+                joystickTouchPos.set(touch);
+                mag.touchJoystick(touch, main.joystick);
             }
             return false;
         }

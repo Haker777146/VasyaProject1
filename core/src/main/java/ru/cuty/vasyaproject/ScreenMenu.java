@@ -38,7 +38,7 @@ public class ScreenMenu implements Screen {
         sndMenuMusic = main.sndMenuMusic;
         sndPlayScreenMusic = main.sndPlayScreenMusic;
 
-        imgBackGround = new Texture("MenuBackGround.png");
+        imgBackGround = new Texture("Img/MenuBackGround.png");
 
         btnPlay = new SunButton("Play", font, 90, 740);
         btnSettings = new SunButton("Settings", font, 90, 615);

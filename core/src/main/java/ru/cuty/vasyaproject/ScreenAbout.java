@@ -35,8 +35,8 @@ public class ScreenAbout implements Screen {
         vasyaOrange = main.vasyaOrange;
         vasyaGreen50 = main.vasyaGreen50;
 
-        imgBackGround = new Texture("MenuBackGround.png");
-        imgBackGroundForTextAbout = new Texture("BackGroundForTextAbout.png");
+        imgBackGround = new Texture("Img/MenuBackGround.png");
+        imgBackGroundForTextAbout = new Texture("Img/BackGroundForTextAbout.png");
 
         btnBack = new SunButton("X", vasyaRed, 1530, 870);
     }

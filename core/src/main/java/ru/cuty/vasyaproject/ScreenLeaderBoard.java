@@ -40,7 +40,7 @@ public class ScreenLeaderBoard implements Screen {
 
         players = main.screenGame.players;
 
-        imgBackGround = new Texture("MenuBackGround.png");
+        imgBackGround = new Texture("Img/MenuBackGround.png");
 
         btnGlobal = new SunButton("Local", vasyaRed, 1350);
         btnClear = new SunButton("Clear", vasyaRed, 725, 130);

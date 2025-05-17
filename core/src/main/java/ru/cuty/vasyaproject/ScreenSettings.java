@@ -60,7 +60,7 @@ public class ScreenSettings implements Screen {
         keyboard = new InputKeyboard(vasyaWhite, SCR_WIDTH, SCR_HEIGHT/2, 7);
 
 
-        imgBackGround = new Texture("MenuBackGround.png");
+        imgBackGround = new Texture("Img/MenuBackGround.png");
 
         loadSettings();
 

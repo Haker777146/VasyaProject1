@@ -34,7 +34,7 @@ import com.badlogic.gdx.utils.TimeUtils;
  *    keyboard.dispose();
  */
 public class InputKeyboard {
-    String keysFileName = "keys.png";
+    String keysFileName = "Img/keys.png";
     private final BitmapFont font;
 
     private final float x, y; // координаты

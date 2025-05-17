@@ -50,8 +50,8 @@ public class Main extends Game {
         vasyaRed70 = new BitmapFont(Gdx.files.internal("Fonts/vasyaRed70.fnt"));
         vasyaGreen50 = new BitmapFont(Gdx.files.internal("Fonts/vasyaGreen50.fnt"));
 
-        sndMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("MusicMenu.mp3"));
-        sndPlayScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("PlayScreenMusic.mp3"));
+        sndMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Sounds/MusicMenu.mp3"));
+        sndPlayScreenMusic = Gdx.audio.newMusic(Gdx.files.internal("Sounds/PlayScreenMusic.mp3"));
 
         joystick = new Joystick(360, RIGHT);
         player = new Player();
